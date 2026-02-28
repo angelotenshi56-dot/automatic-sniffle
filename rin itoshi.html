@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rin Itoshi · A história do predestinado</title>
+    <!-- Fonte inspirada em mangá / esporte -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,800&family=Rubik+Glitch&display=swap" rel="stylesheet">
+    <!-- Ícones (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0b0d10;
+            font-family: 'Inter', sans-serif;
+            color: #e5e9f0;
+            line-height: 1.6;
+        }
+
+        .site-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+        }
+
+        /* efeito de campo de futebol sutil no fundo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(30, 90, 50, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 90, 50, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* header com estilo Blue Lock */
+        .cabecalho {
+            border-bottom: 3px solid #2f8f5e;
+            padding-bottom: 1rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .titulo-principal {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1;
+            background: linear-gradient(135deg, #fff 0%, #a6f0c0 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px #1e4d3b;
+        }
+
+        .titulo-principal i {
+            font-size: 2.5rem;
+            color: #2f8f5e;
+            margin-right: 8px;
+            -webkit-text-fill-color: initial;
+            text-shadow: none;
+            background: none;
+        }
+
+        .sub-rin {
+            font-size: 1.3rem;
+            color: #8ba0b5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sub-rin span {
+            background-color: #1e2f2b;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #a9eec2;
+            border: 1px solid #2f8f5e;
+        }
+
+        .numero-azul {
+            font-family: 'Rubik Glitch', cursive;
+            color: #3fa875;
+            font-size: 1.8rem;
+            opacity: 0.7;
+            margin-left: 10px;
+        }
+
+        /* capítulos em grid */
+        .grid-capitulos {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin: 3rem 0 4rem;
+        }
+
+        .capitulo {
+            background: rgba(18, 25, 22, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 36px 12px 36px 12px;
+            border: 1px solid #2d4d3e;
+            box-shadow: 0 25px 40px -20px #000;
+            padding: 2rem 2rem 2rem 2rem;
+            transition: 0.25s ease;
+        }
+
+        .capitulo:hover {
+            border-color: #55b883;
+            box-shadow: 0 30px 50px -18px #1b7943;
+        }
+
+        .cap-numero {
+            display: inline-block;
+            background-color: #13261e;
+            color: #8fffc2;
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            letter-spacing: 2px;
+            border: 1px solid #39855c;
+            margin-bottom: 1rem;
+        }
+
+        .cap-conteudo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .cap-texto {
+            flex: 2 1 300px;
+        }
+
+        .cap-texto h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d0f2de;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cap-texto h2 i {
+            color: #2f8f5e;
+            font-size: 2rem;
+        }
+
+        .cap-texto p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        .destaque-verde {
+            color: #a0e6ba;
+            font-weight: 600;
+            border-left: 4px solid #1f8f57;
+            padding-left: 1rem;
+            margin: 1.2rem 0;
+            background: linear-gradient(90deg, #14251e, transparent);
+        }
+
+        .cap-imagem {
+            flex: 1 1 200px;
+            text-align: center;
+            font-size: 7rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 8px #39855c);
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50% 20% 50% 20%;
+            padding: 1.5rem 0.5rem;
+            border: 2px dashed #3f7357;
+        }
+
+        .cap-imagem i {
+            transition: 0.2s;
+        }
+
+        .cap-imagem i:hover {
+            transform: scale(1.05);
+            color: #e0ffb0;
+        }
+
+        /* citação especial */
+        .citacao-bluelock {
+            background: #0c1813;
+            border-radius: 60px 8px 60px 8px;
+            padding: 2rem 3rem;
+            margin: 3rem 0;
+            border: 2px solid #2b704b;
+            box-shadow: inset 0 0 20px #0a1f15;
+            text-align: center;
+        }
+
+        .citacao-bluelock p {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-style: italic;
+            color: #ccf7e1;
+            line-height: 1.4;
+        }
+
+        .citacao-bluelock p::before {
+            content: "“";
+            font-size: 4rem;
+            color: #418a62;
+            margin-right: 10px;
+        }
+
+        .citacao-bluelock p::after {
+            content: "”";
+            font-size: 4rem;
+            color: #418a62;
+            margin-left: 10px;
+        }
+
+        .autor-cit {
+            margin-top: 1rem;
+            color: #779c88;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        /* timeline / trajetória */
+        .trajetoria {
+            background: #0f1d17;
+            padding: 2rem;
+            border-radius: 30px;
+            margin: 3rem 0;
+        }
+
+        .trajetoria h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #b3f0cd;
+        }
+
+        .passos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .passo-item {
+            background: #1b2d25;
+            border-radius: 50px 8px 50px 8px;
+            padding: 1rem 1.8rem;
+            min-width: 150px;
+            text-align: center;
+            border: 1px solid #376e4f;
+            font-weight: 600;
+            box-shadow: 0 10px 10px -8px black;
+        }
+
+        .passo-item i {
+            display: block;
+            font-size: 2rem;
+            color: #58b987;
+            margin-bottom: 8px;
+        }
+
+        .passo-item .ano {
+            font-size: 0.9rem;
+            color: #9fbfae;
+            letter-spacing: 1px;
+        }
+
+        /* footer */
+        .rodape {
+            margin-top: 4rem;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid #2b4c3c;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            color: #638b78;
+        }
+
+        .rodape .blue-lock-footer {
+            font-size: 0.9rem;
+        }
+
+        .bola-icon {
+            display: inline-block;
+            background: #2c5e45;
+            border-radius: 50%;
+            padding: 0.3rem 0.7rem;
+            margin: 0 5px;
+            color: black;
+            font-weight: 800;
+        }
+
+        /* responsividade */
+        @media (max-width: 680px) {
+            .titulo-principal {
+                font-size: 2.5rem;
+            }
+            .cap-conteudo {
+                flex-direction: column;
+            }
+            .citacao-bluelock p {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- cabeçalho com identidade -->
+        <header class="cabecalho">
+            <div>
+                <h1 class="titulo-principal">
+                    <i class="fas fa-dragon"></i> RIN ITOSHI
+                </h1>
+                <div class="sub-rin">
+                    <span>BLUE LOCK · PROJETO</span> 
+                    <i class="fas fa-futbol"></i> O herdeiro do caos
+                    <span class="numero-azul">#10</span>
+                </div>
+            </div>
+            <div>
+                <i class="fas fa-bolt" style="color: #ffd966; font-size: 2rem;"></i>
+            </div>
+        </header>
+
+        <!-- introdução / resumo -->
+        <section class="citacao-bluelock">
+            <p>Eu não jogo futebol para me divertir. Só quero destruir todos que estão na minha frente.</p>
+            <div class="autor-cit">— Rin Itoshi, diante da Seleção Sub-20</div>
+        </section>
+
+        <!-- CORPO DA HISTÓRIA (capítulos) -->
+        <div class="grid-capitulos">
+            <!-- CAPÍTULO 1 -->
+            <article class="capitulo">
+                <span class="cap-numero"><i class="far fa-clock"></i> PRÓLOGO · SOMBRA E LUZ</span>
+                <div class="cap-conteudo">
+                    <div class="cap-texto">
+                        <h2><i class="fas fa-child"></i> O irmão do “gênio”</h2>
+                        <p>Rin Itoshi nasceu em uma família onde o futebol corria nas veias. Seu irmão mais velho, <strong class="destaque-verde">Sae Itoshi</strong>, era considerado um prodígio absoluto — o meio-campista que o Japão inteiro esperava. Rin idolatrava Sae e treinava incansavelmente para um dia jogar ao lado dele e ser reconhecido como seu igual.</p>
+                        <p>Desde pequeno, Rin demonstrava uma frieza calculista dentro de campo. Enquanto outras crianças sorriam, ele apenas analisava, competia e vencia. Seu objetivo era claro: ser o parceiro ideal de Sae.</p>
+                        <div class="destaque-verde">
+                            <i class="fas fa-futbol"></i> “Se não puder ser o melhor, não há sentido em jogar.”
+                        </div>
+                    </div>
+                    <div class="cap-imagem">
+                        <i class="fas fa-mask"></i>
+                        <div style="font-size: 1rem; margin-top: 0.5rem;">⚡ infância</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CAPÍTULO 2 -->
+            <article class="capitulo">
+                <span class="cap-numero"><i class="fas fa-skull"></i> CAPÍTULO 2 · A TRAIÇÃO DO ÍDOLO</span>
+                <div class="cap-conteudo">
+                    <div class="cap-texto">
+                        <h2><i class="fas fa-heart-broken"></i> O sonho despedaçado</h2>
+                        <p>Sae Itoshi partiu para a Europa e se tornou um dos jovens mais promissores do mundo. Rin esperava ansioso pelo retorno do irmão para, juntos, dominarem o futebol japonês. Porém, quando Sae voltou, algo havia mudado. Ele disse a Rin: <em>“Você nunca passará de um jogador medíocre. Não é digno de ser meu parceiro.”</em></p>
+                        <p>Pior ainda: Sae declarou que seu novo sonho era se tornar o melhor atacante do mundo — e que Rin não passava de um trampolim. Para Rin, o chão sumiu. A admiração se transformou em ódio puro.</p>
+                        <p><i class="fas fa-dragon" style="color: #6ac58f;"></i> A partir daquele dia, Rin jurou que iria destruir Sae dentro de campo e provar que era mais do que seu irmão.</p>
+                    </div>
+                    <div class="cap-imagem">
+                        <i class="fas fa-broken"></i>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CAPÍTULO 3 -->
+            <article class="capitulo">
+                <span class="cap-numero"><i class="fas fa-bolt"></i> CAPÍTULO 3 · O DESPERTAR NO BLUE LOCK</span>
+                <div class="cap-conteudo">
+                    <div class="cap-texto">
+                        <h2><i class="fas fa-skull-crossbones"></i> Rin, o predador</h2>
+                        <p>Rin ingressou no Blue Lock com a missão interna de se tornar tão forte que Sae não pudesse mais ignorá-lo. Lá, sua personalidade fria e seu faro de gol o colocaram no topo desde o início. Enquanto outros duelavam por ego, Rin simplesmente <strong>executava</strong>.</p>
+                        <p>Ele não temia ninguém — sua técnica era impecável, seus dribles cirúrgicos e seus chutes precisos como lâminas. Rin liderou a equipe Top Three e foi essencial na vitória contra a Seleção Japonesa Sub-20. Durante o jogo, ele enfrentou Sae frente a frente e mostrou ao mundo sua evolução monstruosa.</p>
+                        <div class="destaque-verde">
+                            <i class="fas fa-chart-line"></i> “Eu vou te engolir, Sae. E depois vou me tornar o melhor atacante do planeta.”
+                        </div>
+                    </div>
+                    <div class="cap-imagem">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CAPÍTULO 4 -->
+            <article class="capitulo">
+                <span class="cap-numero"><i class="fas fa-infinity"></i> CAPÍTULO 4 · FLOW OBSCURO</span>
+                <div class="cap-conteudo">
+                    <div class="cap-texto">
+                        <h2><i class="fas fa-ghost"></i> O Egoísta que rivaliza</h2>
+                        <p>Apesar de sua rivalidade com Sae, Rin encontrou outro obstáculo: <strong>Isagi Yoichi</strong>. Um jogador que, mesmo muito menos experiente, conseguia ler o jogo e adaptar seu ego de formas imprevisíveis. Rin sentiu uma mistura de desprezo e fascínio — Isagi o fazia duvidar de sua própria lógica.</p>
+                        <p>No arco do Neo Egoist League, Rin explodiu em uma nova fase: <strong>“Flow destrutivo”</strong>. Seu futebol se tornou mais instintivo, animalesco. Ele não apenas buscava a vitória; buscava esmagar a alma do adversário. Essa versão de Rin assustou até mesmo seus aliados.</p>
+                        <p><i class="fas fa-fire"></i> Sua história é a de um talento bruto guiado pelo ódio, mas que aos poucos começa a descobrir um propósito próprio — para além de Sae.</p>
+                    </div>
+                    <div class="cap-imagem">
+                        <i class="fas fa-skull"></i>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- linha do tempo visual rápida -->
+        <section class="trajetoria">
+            <h3><i class="fas fa-timeline"></i> Linha do tempo de Rin</h3>
+            <div class="passos">
+                <div class="passo-item"><i class="fas fa-baby"></i> Infância <span class="ano">· sombra de Sae</span></div>
+                <div class="passo-item"><i class="fas fa-exchange-alt"></i> Ruptura <span class="ano">· irmão vs irmão</span></div>
+                <div class="passo-item"><i class="fas fa-filter"></i> Blue Lock <span class="ano">· top 1</span></div>
+                <div class="passo-item"><i class="fas fa-trophy"></i> Sub-20 <span class="ano">· revanche</span></div>
+                <div class="passo-item"><i class="fas fa-dragon"></i> Neo Egoist <span class="ano">· flow obscuro</span></div>
+            </div>
+        </section>
+
+        <!-- curiosidades / detalhe -->
+        <div style="display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; margin: 3rem 0;">
+            <span style="background: #0f241c; padding: 0.7rem 2rem; border-radius: 40px; border: 1px solid #2c8f5e;"><i class="fas fa-ruler"></i> Chute devastador · 99</span>
+            <span style="background: #0f241c; padding: 0.7rem 2rem; border-radius: 40px; border: 1px solid #2c8f5e;"><i class="fas fa-brain"></i> Visão de jogo · 98</span>
+            <span style="background: #0f241c; padding: 0.7rem 2rem; border-radius: 40px; border: 1px solid #2c8f5e;"><i class="fas fa-fist-raised"></i> Destruição · ∞</span>
+        </div>
+
+        <!-- rodapé com mensagem -->
+        <footer class="rodape">
+            <div class="blue-lock-footer">
+                <i class="fas fa-copyright"></i> 2025 · história baseada em Blue Lock (MUNEYUKI KANESHIRO / YUSUKE NOMURA) 
+                <span class="bola-icon">BL</span>
+            </div>
+            <div>
+                <i class="fas fa-star"></i> Rin Itoshi · o futebolista que joga para aniquilar
+            </div>
+        </footer>
+    </div>
+    <!-- efeito de fade simples -->
+</body>
+</html>

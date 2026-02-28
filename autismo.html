@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<body lang="pt-BR">
+<head link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trabalho Ensino Médio - TEA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:'Roboto',sans-serif;
+    color:#222;
+    line-height:1.7;
+    transition:background 0.5s, color 0.5s;
+}
+body.dark{
+    background:#121212;
+    color:#eee;
+}
+
+/* MENU */
+nav{
+    background:#0d47a1;
+    padding:15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+nav a{
+    color:white;
+    margin:0 15px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+nav a:hover{color:#ffeb3b;}
+#darkModeToggle{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:#ffeb3b;
+    border:none;
+    padding:5px 10px;
+    border-radius:5px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* CABEÇALHO */
+header{
+    background:linear-gradient(to right,#0d47a1,#1976d2);
+    color:white;
+    text-align:center;
+    padding:50px 20px;
+    animation: fadeIn 2s ease;
+}
+header h1{font-size:2.6em;margin-bottom:10px;}
+header p{margin-top:5px;font-size:1.1em;}
+
+/* SEÇÕES */
+section{
+    max-width:1000px;
+    margin:50px auto;
+    padding:30px;
+    animation: fadeInUp 1.5s ease;
+}
+h2{
+    color:#0d47a1;
+    margin-bottom:15px;
+    border-left:6px solid #1976d2;
+    padding-left:10px;
+}
+
+/* CARDS */
+.card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.1);
+    margin-top:20px;
+    transition:transform 0.3s;
+}
+.card:hover{transform:translateY(-5px);}
+body.dark .card{background:#1e1e1e;}
+
+/* LISTAS */
+ul{padding-left:20px;}
+
+/* LINHA DO TEMPO */
+.timeline{border-left:4px solid #1976d2;padding-left:20px;}
+.timeline p{margin-bottom:15px;}
+
+/* GRÁFICO */
+#chart-container{width:100%;max-width:600px;margin:auto;margin-top:20px;}
+
+/* ANIMAÇÕES */
+@keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
+@keyframes fadeInUp{0%{opacity:0; transform:translateY(20px);}100%{opacity:1; transform:translateY(0);}}
+
+/* RODAPÉ */
+footer{
+    background:#0d47a1;
+    color:white;
+    text-align:center;
+    padding:25px;
+    margin-top:50px;
+}
+
+/* RESPONSIVO */
+@media(max-width:768px){
+    nav a{display:block;margin:8px 0;}
+}
+</style>
+</head>
+
+</body script src="script.js"></script>
+
+<nav>
+<a href="#introducao">Introdução</a>
+<a href="#caracteristicas">Características</a>
+<a href="#estatisticas">Estatísticas</a>
+<a href="#direitos">Direitos</a>
+<a href="#conclusao">Conclusão</a>
+<button id="darkModeToggle">Modo Escuro</button>
+</nav>
+
+<header>
+<h1>Transtorno do Espectro Autista (TEA)</h1>
+<p>Trabalho de Pesquisa – Ensino Médio</p>
+<p>Aluno(a): __________ | Professor(a): __________</p>
+</header>
+
+<section id="introducao">
+<h2>1. Introdução</h2>
+<div class="card">
+<p>
+O Transtorno do Espectro Autista (TEA) é uma condição do neurodesenvolvimento
+caracterizada por alterações na comunicação social e padrões comportamentais
+repetitivos. Cada pessoa apresenta manifestações únicas. Por exemplo, eu tenho TEA e, embora não entenda a linguagem abstrata, vivo bem, pois explico como deve falar comigo. A conscientização sobre o TEA é fundamental para promover inclusão e respeito às diferenças. Com o apoio da psicanálise, podemos ter maior compreensão sobre a linguagem coloquial e a abstrata.
+</p>
+</div>
+</section>
+
+<section id="caracteristicas">
+<h2>2. Principais Características</h2>
+<div class="card">
+<ul>
+<li>Dificuldade na interação social</li>
+<li>Alterações na comunicação verbal e não verbal</li>
+<li>Comportamentos repetitivos</li>
+<li>Interesses específicos intensos</li>
+<li>Sensibilidade sensorial</li>
+<li>Possíveis habilidades avançadas (memória, matemática, música)</li>
+</ul>
+</div>
+</section>
+
+<section id="estatisticas">
+<h2>3. Estatísticas</h2>
+<div class="card">
+<p>
+Estudos internacionais indicam que cerca de 1 em cada 36 crianças apresenta diagnóstico de TEA.
+O diagnóstico precoce contribui significativamente para desenvolvimento e inclusão.
+</p>
+<div id="chart-container">
+<canvas id="autismChart"></canvas>
+</div>
+</div>
+</section>
+
+<section id="direitos">
+<h2>4. Direitos no Brasil</h2>
+<div class="card">
+<p>
+A Lei nº 12.764/2012 (Lei Berenice Piana) reconhece a pessoa com TEA como pessoa
+com deficiência para todos os efeitos legais, garantindo educação inclusiva, saúde
+e proteção social.
+</p>
+</div>
+<div class="card timeline">
+<p><strong>1988:</strong> Constituição Federal garante educação para todos.</p>
+<p><strong>1996:</strong> LDB reforça educação inclusiva.</p>
+<p><strong>2012:</strong> Lei Berenice Piana garante direitos específicos ao TEA.</p>
+</div>
+</section>
+
+<section id="conclusao">
+<h2>5. Conclusão</h2>
+<div class="card">
+<p>
+Compreender o autismo é essencial para combater preconceitos e promover inclusão.
+Informação, empatia e suporte adequado são ferramentas fundamentais para uma
+sociedade mais justa e igualitária.
+</p>
+</div>
+</section>
+
+<section>
+<h2>6. Referências (ABNT)</h2>
+<div class="card">
+<p>AMERICAN PSYCHIATRIC ASSOCIATION. DSM-5. 5ª ed. Arlington: APA, 2013.</p>
+<p>ORGANIZAÇÃO MUNDIAL DA SAÚDE (OMS). Transtorno do espectro autista. Genebra: OMS, 2021.</p>
+<p>BRASIL. Lei nº 12.764, de 27 de dezembro de 2012. Institui a Política Nacional de Proteção dos Direitos da Pessoa com Transtorno do Espectro Autista.</p>
+</div>
+</section>
+
+<footer>
+© 2026 - Trabalho Escolar sobre TEA 💙
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// GRÁFICO
+const ctx = document.getElementById('autismChart').getContext('2d');
+const autismChart = new Chart(ctx, {
+    type:'bar',
+    data:{
+        labels:['2010','2012','2014','2016','2018','2020','2022'],
+        datasets:[{
+            label:'Casos diagnosticados (estimativa por 10k crianças)',
+            data:[5,8,12,15,20,28,35],
+            backgroundColor:'rgba(21,101,192,0.7)',
+            borderColor:'rgba(13,71,161,1)',
+            borderWidth:1
+        }]
+    },
+    options:{
+        responsive:true,
+        plugins:{legend:{position:'top'}},
+        scales:{y:{beginAtZero:true}}
+    }
+});
+
+// MODO ESCURO
+const toggle = document.getElementById('darkModeToggle');
+toggle.addEventListener('click', ()=>{document.body.classList.toggle('dark');});
+</script>
+
+</body>
+</html>

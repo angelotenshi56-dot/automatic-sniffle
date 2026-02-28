@@ -1,0 +1,2833 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ Sistema Nacional de Direitos TEA e AH/SD - Plataforma Oficial</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-50: #eef2ff;
+            --primary-100: #e0e7ff;
+            --primary-200: #c7d2fe;
+            --primary-300: #a5b4fc;
+            --primary-400: #818cf8;
+            --primary-500: #6366f1;
+            --primary-600: #4f46e5;
+            --primary-700: #4338ca;
+            --primary-800: #3730a3;
+            --primary-900: #312e81;
+            
+            --tea-50: #fff1f1;
+            --tea-100: #ffe0e0;
+            --tea-500: #ef4444;
+            --tea-600: #dc2626;
+            
+            --ahsd-50: #e8f0fe;
+            --ahsd-100: #d4e2fc;
+            --ahsd-500: #3b82f6;
+            --ahsd-600: #2563eb;
+            
+            --autism-colors: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            --brain-colors: linear-gradient(135deg, #a8e6cf, #d4edda, #c3e6cb, #b8e0d2);
+            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            --bg-primary: #ffffff;
+            --bg-secondary: var(--gray-50);
+            --bg-card: #ffffff;
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-tertiary: var(--gray-500);
+            --border-light: var(--gray-200);
+            --border-medium: var(--gray-300);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+            
+            --header-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-gradient: linear-gradient(135deg, var(--primary-50), var(--primary-100));
+            --tea-gradient: linear-gradient(135deg, #fee2e2, #fecaca);
+            --ahsd-gradient: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--gray-900);
+            --bg-secondary: var(--gray-800);
+            --bg-card: var(--gray-800);
+            --text-primary: var(--gray-50);
+            --text-secondary: var(--gray-300);
+            --text-tertiary: var(--gray-400);
+            --border-light: var(--gray-700);
+            --border-medium: var(--gray-600);
+            
+            --card-gradient: linear-gradient(135deg, var(--gray-800), var(--gray-700));
+            --tea-gradient: linear-gradient(135deg, #991b1b, #7f1d1d);
+            --ahsd-gradient: linear-gradient(135deg, #1e3a8a, #1e40af);
+            
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: background-color var(--transition-base), color var(--transition-base);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-500);
+            border-radius: 6px;
+            border: 3px solid var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-600);
+        }
+
+        /* Animações Keyframes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(2deg); }
+            75% { transform: translateY(-5px) rotate(-2deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 var(--primary-500);
+                opacity: 1;
+            }
+            50% { 
+                box-shadow: 0 0 30px 10px var(--primary-500);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slide-in-blurred {
+            0% {
+                transform: translateY(30px) scale(0.95);
+                filter: blur(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotate-3d {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes infinity-path {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 1000; }
+        }
+
+        /* Logo do Autismo (Infinito Colorido) */
+        .autism-logo {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .autism-logo svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .autism-logo path {
+            stroke: url(#autismGradient);
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            animation: infinity-path 10s linear infinite;
+        }
+
+        /* Logo do Cérebro */
+        .brain-logo {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+            position: relative;
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        .brain-logo i {
+            font-size: 3em;
+            background: var(--brain-colors);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity var(--transition-base), visibility var(--transition-base);
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid var(--border-light);
+            border-top-color: var(--primary-500);
+            border-right-color: var(--primary-400);
+            border-bottom-color: var(--primary-300);
+            border-radius: 50%;
+            animation: rotate-3d 1.5s linear infinite;
+        }
+
+        .loading-text {
+            position: absolute;
+            margin-top: 100px;
+            font-size: 1.2em;
+            color: var(--primary-500);
+            font-weight: 500;
+        }
+
+        /* Header Moderno */
+        .header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 80px 20px 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M0 0 L100 100 M100 0 L0 100" stroke="white" stroke-width="1"/></svg>');
+            animation: rotate-3d 20s linear infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: inherit;
+            filter: blur(20px);
+            opacity: 0.5;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .header-icon-wrapper {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all var(--transition-bounce);
+        }
+
+        .header-icon-wrapper:hover {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .header h1 {
+            font-size: 4em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: slide-in-blurred 1s ease;
+        }
+
+        .header p {
+            font-size: 1.4em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: slide-in-blurred 1.2s ease;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            animation: slide-in-blurred 1.4s ease;
+        }
+
+        .header-stat-item {
+            text-align: center;
+        }
+
+        .header-stat-number {
+            font-size: 2.5em;
+            font-weight: 800;
+            display: block;
+            line-height: 1;
+        }
+
+        .header-stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Botão Modo Escuro Avançado */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 2px solid var(--border-light);
+            border-radius: 60px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-base);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-500);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2em;
+            transition: transform var(--transition-bounce);
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: -50px auto 0;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Cards de Ação Rápida */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .quick-action-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-bounce);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .quick-action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(99, 102, 241, 0.1));
+            transform: translateX(-100%);
+            transition: transform var(--transition-base);
+        }
+
+        .quick-action-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .quick-action-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary-500);
+        }
+
+        .quick-action-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-100), var(--primary-200));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all var(--transition-base);
+        }
+
+        .quick-action-card:hover .quick-action-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+        }
+
+        .quick-action-icon i {
+            font-size: 2em;
+            color: var(--primary-600);
+            transition: all var(--transition-base);
+        }
+
+        .quick-action-card:hover .quick-action-icon i {
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .quick-action-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .quick-action-subtitle {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        /* Dashboard de Estatísticas */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 30px 25px;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent, var(--primary-500));
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-2xl);
+            border-color: var(--primary-500);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-100), var(--primary-200));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon i {
+            font-size: 1.8em;
+            color: var(--primary-600);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #10b981;
+            font-size: 0.9em;
+        }
+
+        .stat-trend i {
+            font-size: 1.2em;
+        }
+
+        /* Grid Principal */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* Cards de Conteúdo */
+        .content-card {
+            background: var(--bg-card);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-2xl);
+            border-color: var(--primary-500);
+        }
+
+        .card-header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .card-header {
+            background: linear-gradient(135deg, var(--gray-800), var(--gray-700));
+        }
+
+        .card-header-logos {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-header-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header-icon i {
+            font-size: 2em;
+            color: var(--primary-600);
+        }
+
+        .card-header h2 {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .card-header p {
+            color: var(--text-secondary);
+            font-size: 1.1em;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        /* Timeline Aprimorada */
+        .timeline-modern {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-modern::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary-500), var(--primary-300));
+            border-radius: 3px;
+            opacity: 0.5;
+        }
+
+        .timeline-item-modern {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 35px;
+            animation: slide-in-blurred 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .timeline-item-modern:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item-modern:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item-modern:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item-modern:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item-modern:nth-child(5) { animation-delay: 0.5s; }
+
+        .timeline-marker {
+            position: absolute;
+            left: 11px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 3px solid var(--primary-500);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            transition: all var(--transition-base);
+            z-index: 2;
+        }
+
+        .timeline-item-modern:hover .timeline-marker {
+            transform: translateX(-50%) scale(1.3);
+            background: var(--primary-500);
+            box-shadow: 0 0 20px var(--primary-500);
+        }
+
+        .timeline-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, var(--primary-100), var(--primary-200));
+            border-radius: 30px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: var(--primary-700);
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .timeline-subtitle {
+            font-size: 0.95em;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-base);
+            cursor: default;
+        }
+
+        .tag:hover {
+            background: var(--primary-500);
+            color: white;
+            border-color: var(--primary-500);
+            transform: translateY(-2px);
+        }
+
+        /* Cards de Informação Avançados */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .info-card-modern {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(99, 102, 241, 0.1));
+            transform: translateY(100%);
+            transition: transform var(--transition-base);
+        }
+
+        .info-card-modern:hover::before {
+            transform: translateY(0);
+        }
+
+        .info-card-modern:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary-500);
+        }
+
+        .info-card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-100), var(--primary-200));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: all var(--transition-base);
+        }
+
+        .info-card-modern:hover .info-card-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+        }
+
+        .info-card-icon i {
+            font-size: 2em;
+            color: var(--primary-600);
+            transition: all var(--transition-base);
+        }
+
+        .info-card-modern:hover .info-card-icon i {
+            color: white;
+        }
+
+        .info-card-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .info-card-text {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .info-card-link {
+            color: var(--primary-500);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all var(--transition-base);
+        }
+
+        .info-card-link:hover {
+            gap: 10px;
+            color: var(--primary-600);
+        }
+
+        /* Gráficos e Visualizações */
+        .charts-section {
+            background: var(--bg-card);
+            border-radius: 32px;
+            padding: 30px;
+            margin: 60px 0;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+        }
+
+        .charts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .charts-header h2 {
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .chart-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-tab {
+            padding: 10px 20px;
+            border: 1px solid var(--border-light);
+            border-radius: 30px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .chart-tab:hover,
+        .chart-tab.active {
+            background: var(--primary-500);
+            color: white;
+            border-color: var(--primary-500);
+        }
+
+        .chart-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .chart-box {
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 20px;
+            height: 400px;
+        }
+
+        /* Mapa Interativo Avançado */
+        .map-section {
+            background: var(--bg-card);
+            border-radius: 32px;
+            padding: 30px;
+            margin: 60px 0;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+        }
+
+        .map-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .map-header h2 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .map-header p {
+            color: var(--text-secondary);
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .brazil-map {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .region-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .region-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            opacity: 0;
+            transition: opacity var(--transition-base);
+            z-index: 1;
+        }
+
+        .region-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .region-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--primary-500);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .region-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-100), var(--primary-200));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all var(--transition-base);
+            position: relative;
+            z-index: 2;
+        }
+
+        .region-card:hover .region-icon {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+        }
+
+        .region-icon i {
+            font-size: 2em;
+            color: var(--primary-600);
+            transition: all var(--transition-base);
+        }
+
+        .region-card:hover .region-icon i {
+            color: white;
+        }
+
+        .region-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .region-stats {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .region-stat {
+            text-align: center;
+        }
+
+        .region-stat-number {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-500);
+            display: block;
+        }
+
+        .region-stat-label {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+
+        .region-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            text-align: center;
+            animation: scale-in 0.3s ease;
+        }
+
+        /* Timeline Interativa */
+        .interactive-timeline {
+            background: var(--bg-card);
+            border-radius: 32px;
+            padding: 30px;
+            margin: 60px 0;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .timeline-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-control {
+            padding: 12px 24px;
+            border: 1px solid var(--border-light);
+            border-radius: 40px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            font-weight: 500;
+        }
+
+        .timeline-control:hover,
+        .timeline-control.active {
+            background: var(--primary-500);
+            color: white;
+            border-color: var(--primary-500);
+            transform: translateY(-2px);
+        }
+
+        .timeline-slider {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .timeline-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+            padding: 30px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .timeline-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .timeline-slide-year {
+            font-size: 4em;
+            font-weight: 800;
+            color: var(--primary-500);
+            opacity: 0.2;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+        }
+
+        .timeline-slide-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            max-width: 70%;
+        }
+
+        .timeline-slide-content {
+            color: var(--text-secondary);
+            font-size: 1.2em;
+            line-height: 1.8;
+            max-width: 70%;
+        }
+
+        .timeline-slide-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .timeline-slide-stat {
+            text-align: center;
+        }
+
+        .timeline-slide-stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary-500);
+            display: block;
+        }
+
+        .timeline-slide-stat-label {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        .timeline-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .timeline-nav-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .timeline-nav-button:hover {
+            background: var(--primary-500);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--bg-card);
+            border-radius: 32px;
+            padding: 40px;
+            margin: 60px 0;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .faq-header h2 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .faq-header p {
+            color: var(--text-secondary);
+            font-size: 1.2em;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-light);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-500);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .faq-question h3 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .faq-question i {
+            transition: transform var(--transition-base);
+            color: var(--primary-500);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-base);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+            border-radius: 32px;
+            padding: 60px;
+            margin: 60px 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate-3d 30s linear infinite;
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .newsletter-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-text {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1em;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .newsletter-button {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            color: var(--primary-700);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            font-size: 1em;
+        }
+
+        .newsletter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Footer Moderno */
+        .footer-modern {
+            background: var(--bg-card);
+            padding: 80px 20px 30px;
+            margin-top: 80px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 60px;
+        }
+
+        .footer-about h3 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-about p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            transition: all var(--transition-base);
+            border: 1px solid var(--border-light);
+        }
+
+        .footer-social a:hover {
+            background: var(--primary-500);
+            color: white;
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        .footer-links h4 {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-base);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-500);
+            transform: translateX(5px);
+        }
+
+        .footer-contact h4 {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        .footer-contact-item i {
+            width: 20px;
+            color: var(--primary-500);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 60px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: var(--text-secondary);
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-base);
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--primary-500);
+        }
+
+        /* Botão Flutuante */
+        .floating-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .floating-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-500);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            box-shadow: var(--shadow-xl);
+            transition: all var(--transition-bounce);
+            position: relative;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: var(--primary-600);
+        }
+
+        .floating-button .tooltip {
+            position: absolute;
+            right: 70px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+        }
+
+        .floating-button:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            right: 80px;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(100px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-bounce);
+            z-index: 1000;
+            border: 1px solid var(--border-light);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .toast-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toast-message {
+            font-weight: 500;
+        }
+
+        .toast-close {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: color var(--transition-base);
+        }
+
+        .toast-close:hover {
+            color: var(--primary-500);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .stats-dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .header-logos {
+                gap: 20px;
+            }
+            
+            .autism-logo, .brain-logo {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .stats-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .brazil-map {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-slide-title {
+                max-width: 100%;
+                font-size: 1.8em;
+            }
+            
+            .timeline-slide-content {
+                max-width: 100%;
+            }
+        }
+
+        /* Animações AOS */
+        [data-aos] {
+            pointer-events: none;
+        }
+
+        [data-aos].aos-animate {
+            pointer-events: auto;
+        }
+
+        /* SVG Gradient Definitions */
+        .svg-defs {
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG Gradients -->
+    <svg class="svg-defs">
+        <defs>
+            <linearGradient id="autismGradient" x1="0%" y1="0%" x2="100%" y2="0%" gradientTransform="rotate(45)">
+                <stop offset="0%" stop-color="#ff6b6b" />
+                <stop offset="25%" stop-color="#4ecdc4" />
+                <stop offset="50%" stop-color="#45b7d1" />
+                <stop offset="75%" stop-color="#96ceb4" />
+                <stop offset="100%" stop-color="#ffeaa7" />
+            </linearGradient>
+            <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#a8e6cf" />
+                <stop offset="50%" stop-color="#d4edda" />
+                <stop offset="100%" stop-color="#c3e6cb" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Carregando Plataforma...</div>
+    </div>
+
+    <!-- Botões Flutuantes -->
+    <div class="floating-actions">
+        <button class="floating-button" id="backToTop">
+            <i class="fas fa-arrow-up"></i>
+            <span class="tooltip">Voltar ao topo</span>
+        </button>
+        <button class="floating-button" id="shareButton">
+            <i class="fas fa-share-alt"></i>
+            <span class="tooltip">Compartilhar</span>
+        </button>
+        <button class="floating-button" id="helpButton">
+            <i class="fas fa-question"></i>
+            <span class="tooltip">Ajuda</span>
+        </button>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="toast-message" id="toastMessage">Ação realizada com sucesso!</div>
+        <button class="toast-close" onclick="hideToast()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Botão Modo Escuro -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span>Modo Escuro</span>
+    </button>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-logos">
+                <div class="header-icon-wrapper">
+                    <div class="autism-logo">
+                        <svg viewBox="0 0 100 100">
+                            <path d="M20,50 Q35,20 50,50 Q65,80 80,50" stroke="url(#autismGradient)" stroke-width="4" fill="none" />
+                            <path d="M20,50 Q35,80 50,50 Q65,20 80,50" stroke="url(#autismGradient)" stroke-width="4" fill="none" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="header-icon-wrapper">
+                    <div class="brain-logo">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                </div>
+            </div>
+            <h1>Sistema Nacional de Direitos</h1>
+            <p>Plataforma oficial de consulta às leis e direitos das pessoas com TEA e Altas Habilidades/Superdotação no Brasil</p>
+            <div class="header-stats">
+                <div class="header-stat-item">
+                    <span class="header-stat-number" id="headerStat1">0</span>
+                    <span class="header-stat-label">Leis Federais</span>
+                </div>
+                <div class="header-stat-item">
+                    <span class="header-stat-number" id="headerStat2">0</span>
+                    <span class="header-stat-label">Decretos</span>
+                </div>
+                <div class="header-stat-item">
+                    <span class="header-stat-number" id="headerStat3">0</span>
+                    <span class="header-stat-label">Direitos</span>
+                </div>
+                <div class="header-stat-item">
+                    <span class="header-stat-number" id="headerStat4">0</span>
+                    <span class="header-stat-label">Benefícios</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Container Principal -->
+    <div class="container">
+        <!-- Ações Rápidas -->
+        <div class="quick-actions">
+            <div class="quick-action-card" onclick="scrollToSection('laws')">
+                <div class="quick-action-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div class="quick-action-title">Leis Vigentes</div>
+                <div class="quick-action-subtitle">Consulta rápida</div>
+            </div>
+            <div class="quick-action-card" onclick="scrollToSection('rights')">
+                <div class="quick-action-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="quick-action-title">Direitos</div>
+                <div class="quick-action-subtitle">Garantias legais</div>
+            </div>
+            <div class="quick-action-card" onclick="scrollToSection('resources')">
+                <div class="quick-action-icon">
+                    <i class="fas fa-map-location-dot"></i>
+                </div>
+                <div class="quick-action-title">Recursos</div>
+                <div class="quick-action-subtitle">Onde buscar ajuda</div>
+            </div>
+            <div class="quick-action-card" onclick="scrollToSection('faq')">
+                <div class="quick-action-icon">
+                    <i class="fas fa-circle-question"></i>
+                </div>
+                <div class="quick-action-title">FAQ</div>
+                <div class="quick-action-subtitle">Perguntas frequentes</div>
+            </div>
+        </div>
+
+        <!-- Dashboard de Estatísticas -->
+        <div class="stats-dashboard">
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <span class="stat-label">Leis TEA</span>
+                </div>
+                <div class="stat-number" id="teaLawCount">0</div>
+                <div class="stat-trend">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+23% em 2024</span>
+                </div>
+            </div>
+
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <span class="stat-label">Leis AH/SD</span>
+                </div>
+                <div class="stat-number" id="ahsdLawCount">0</div>
+                <div class="stat-trend">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+15% em 2024</span>
+                </div>
+            </div>
+
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <span class="stat-label">Instituições</span>
+                </div>
+                <div class="stat-number" id="institutionCount">0</div>
+                <div class="stat-trend">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+52 unidades</span>
+                </div>
+            </div>
+
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-header">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="stat-label">Beneficiados</span>
+                </div>
+                <div class="stat-number" id="benefitedCount">0</div>
+                <div class="stat-trend">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+2.5M pessoas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Principal -->
+        <div class="main-grid" id="laws">
+            <!-- Card TEA -->
+            <div class="content-card" data-aos="fade-right">
+                <div class="card-header">
+                    <div class="card-header-logos">
+                        <div class="card-header-icon">
+                            <div class="autism-logo" style="width: 40px; height: 40px;">
+                                <svg viewBox="0 0 100 100">
+                                    <path d="M20,50 Q35,20 50,50 Q65,80 80,50" stroke="url(#autismGradient)" stroke-width="4" fill="none" />
+                                    <path d="M20,50 Q35,80 50,50 Q65,20 80,50" stroke="url(#autismGradient)" stroke-width="4" fill="none" />
+                                </svg>
+                            </div>
+                        </div>
+                        <h2>Transtorno do Espectro Autista</h2>
+                    </div>
+                    <p>Marco legal completo e direitos assegurados</p>
+                </div>
+                <div class="card-body">
+                    <div class="timeline-modern">
+                        <div class="timeline-item-modern">
+                            <div class="timeline-marker"></div>
+                            <span class="timeline-badge">Lei Federal 12.764/2012</span>
+                            <h3 class="timeline-title">Lei Berenice Piana</h3>
+                            <p class="timeline-subtitle">Institui a Política Nacional de Proteção dos Direitos da Pessoa com TEA. Reconhece o autista como pessoa com deficiência para todos os efeitos legais.</p>
+                            <div class="timeline-tags">
+                                <span class="tag">Direitos</span>
+                                <span class="tag">Saúde</span>
+                                <span class="tag">Educação</span>
+                                <span class="tag">Inclusão</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item-modern">
+                            <div class="timeline-marker"></div>
+                            <span class="timeline-badge">Lei Federal 13.977/2020</span>
+                            <h3 class="timeline-title">Lei Romeo Mion</h3>
+                            <p class="timeline-subtitle">Cria a Carteira de Identificação da Pessoa com TEA (CIPTEA), garantindo atendimento prioritário e identificação facilitada em serviços públicos e privados.</p>
+                            <div class="timeline-tags">
+                                <span class="tag">Identificação</span>
+                                <span class="tag">Prioridade</span>
+                                <span class="tag">CIPTEA</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item-modern">
+                            <div class="timeline-marker"></div>
+                            <span class="timeline-badge">Lei Federal 14.624/2023</span>
+                            <h3 class="timeline-title">Lei do Cordão de Girassol</h3>
+                            <p class="timeline-subtitle">Institui o uso do cordão de girassol para identificação de pessoas com deficiências ocultas, incluindo o TEA.</p>
+                            <div class="timeline-tags">
+                                <span class="tag">Identificação</span>
+                                <span class="tag">Deficiências Ocultas</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item-modern">
+                            <div class="timeline-marker"></div>
+                            <span class="timeline-badge">Decreto 8.368/2014</span>
+                            <h3 class="timeline-title">Regulamentação da Lei Berenice Piana</h3>
+                            <p class="timeline-subtitle">Dispõe sobre o diagnóstico precoce, atendimento multiprofissional e diretrizes para o SUS.</p>
+                            <div class="timeline-tags">
+                                <span class="tag">SUS</span>
+                                <span class="tag">Diagnóstico</span>
+                                <span class="tag">Terapias</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card AH/SD -->
+            <div class="content-card" data-aos="fade-left">
+                <div class="card-header">
+                    <div class="card-header-logos">
+                        <div class="card-header-icon">
+                            <i class="fas fa-brain" style="font-size: 2em; color: var(--primary-600);"></i>
+                        </div>
+                        <h2>Altas Habilidades/Superdotação</h2>
+                    </div>
+                    <p>Legislação educacional e direitos específicos</p>
+                </div>
+                <div class="card-body">
+                    <div class="timeline-modern">
+                        <div class="timeline-item-modern">
+                            <div class="timeline-marker"></div>
+                            <span class="timeline-badge">Lei 9.394/1996 - LDB</span>
+                            <h3 class="timeline-title">Lei de Diretrizes e Bases</h3>
+                            <p class="timeline-subtitle">Art. 4º, inciso III - Garante atendimento educacional especializado gratuito aos educandos com altas habilidades/superdotação.</p>
+                            <div class="timeline-tags">
+                                <span class="tag">Educação</span>
+                                <span class="tag">LDB</span>
+                                <span class="tag">AEE</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item-modern">
+                            <div class="timeline-marker"></div>
+                            <span class="timeline-badge">Lei 13.234/2015</span>
+                            <h3 class="timeline-title">Alteração da LDB</h3>
+                            <p class="timeline-subtitle">Assegura currículos, métodos e recursos específicos para AH/SD, incluindo aceleração de estudos.</p>
+                            <div class="timeline-tags">
+                                <span class="tag">Currículo</span>
+                                <span class="tag">Aceleração</span>
+                                <span class="tag">Métodos</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item-modern">
+                            <div class="timeline-marker"></div>
+                            <span class="timeline-badge">Decreto 7.611/2011</span>
+                            <h3 class="timeline-title">Atendimento Educacional Especializado</h3>
+                            <p class="timeline-subtitle">Dispõe sobre o AEE e garante a aceleração de estudos para concluir em menor tempo a escolaridade.</p>
+                            <div class="timeline-tags">
+                                <span class="tag">AEE</span>
+                                <span class="tag">Aceleração</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item-modern">
+                            <div class="timeline-marker"></div>
+                            <span class="timeline-badge">Resolução CNE/CEB 4/2021</span>
+                            <h3 class="timeline-title">Diretrizes Nacionais</h3>
+                            <p class="timeline-subtitle">Diretrizes operacionais para o atendimento educacional especializado na educação básica.</p>
+                            <div class="timeline-tags">
+                                <span class="tag">Diretrizes</span>
+                                <span class="tag">CNE</span>
+                                <span class="tag">Educação Básica</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leis Comuns e Direitos -->
+        <div class="info-grid" id="rights">
+            <div class="info-card-modern" data-aos="flip-left" data-aos-delay="100">
+                <div class="info-card-icon">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3 class="info-card-title">Estatuto da Criança e do Adolescente</h3>
+                <p class="info-card-text">Lei 8.069/1990 - Garante proteção integral, prioridade absoluta e atendimento especializado para crianças e adolescentes com deficiência.</p>
+                <a href="#" class="info-card-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="info-card-modern" data-aos="flip-left" data-aos-delay="200">
+                <div class="info-card-icon">
+                    <i class="fas fa-wheelchair"></i>
+                </div>
+                <h3 class="info-card-title">Lei Brasileira de Inclusão</h3>
+                <p class="info-card-text">Lei 13.146/2015 - Estatuto da Pessoa com Deficiência. Garante acessibilidade, atendimento prioritário e combate à discriminação.</p>
+                <a href="#" class="info-card-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="info-card-modern" data-aos="flip-left" data-aos-delay="300">
+                <div class="info-card-icon">
+                    <i class="fas fa-car"></i>
+                </div>
+                <h3 class="info-card-title">Isenção de Impostos</h3>
+                <p class="info-card-text">Direito à isenção de IPI, IOF, ICMS e IPVA na compra de veículos adaptados para pessoas com deficiência.</p>
+                <a href="#" class="info-card-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="info-card-modern" data-aos="flip-left" data-aos-delay="400">
+                <div class="info-card-icon">
+                    <i class="fas fa-hospital"></i>
+                </div>
+                <h3 class="info-card-title">Direitos à Saúde</h3>
+                <p class="info-card-text">Atendimento integral pelo SUS, fornecimento gratuito de medicamentos, terapias e acompanhamento multiprofissional.</p>
+                <a href="#" class="info-card-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Gráficos e Visualizações -->
+        <div class="charts-section">
+            <div class="charts-header">
+                <h2>📊 Panorama Nacional</h2>
+                <div class="chart-tabs">
+                    <button class="chart-tab active" onclick="switchChart('tea')">TEA</button>
+                    <button class="chart-tab" onclick="switchChart('ahsd')">AH/SD</button>
+                    <button class="chart-tab" onclick="switchChart('comparison')">Comparativo</button>
+                </div>
+            </div>
+            <div class="chart-container">
+                <div class="chart-box">
+                    <canvas id="chartTea"></canvas>
+                </div>
+                <div class="chart-box">
+                    <canvas id="chartAHSD"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mapa Interativo -->
+        <div class="map-section" id="resources">
+            <div class="map-header">
+                <h2>🗺️ Recursos por Região</h2>
+                <p>Encontre instituições, centros de referência e associações de apoio em todo o Brasil</p>
+            </div>
+            <div class="brazil-map">
+                <div class="region-card" onclick="showRegionInfo('norte')">
+                    <div class="region-icon">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
+                    <h3 class="region-name">Norte</h3>
+                    <div class="region-stats">
+                        <div class="region-stat">
+                            <span class="region-stat-number">12</span>
+                            <span class="region-stat-label">Instituições</span>
+                        </div>
+                        <div class="region-stat">
+                            <span class="region-stat-number">8</span>
+                            <span class="region-stat-label">Centros</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-card" onclick="showRegionInfo('nordeste')">
+                    <div class="region-icon">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
+                    <h3 class="region-name">Nordeste</h3>
+                    <div class="region-stats">
+                        <div class="region-stat">
+                            <span class="region-stat-number">22</span>
+                            <span class="region-stat-label">Instituições</span>
+                        </div>
+                        <div class="region-stat">
+                            <span class="region-stat-number">15</span>
+                            <span class="region-stat-label">Centros</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-card" onclick="showRegionInfo('centro-oeste')">
+                    <div class="region-icon">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
+                    <h3 class="region-name">Centro-Oeste</h3>
+                    <div class="region-stats">
+                        <div class="region-stat">
+                            <span class="region-stat-number">15</span>
+                            <span class="region-stat-label">Instituições</span>
+                        </div>
+                        <div class="region-stat">
+                            <span class="region-stat-number">10</span>
+                            <span class="region-stat-label">Centros</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-card" onclick="showRegionInfo('sudeste')">
+                    <div class="region-icon">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
+                    <h3 class="region-name">Sudeste</h3>
+                    <div class="region-stats">
+                        <div class="region-stat">
+                            <span class="region-stat-number">25</span>
+                            <span class="region-stat-label">Instituições</span>
+                        </div>
+                        <div class="region-stat">
+                            <span class="region-stat-number">18</span>
+                            <span class="region-stat-label">Centros</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region-card" onclick="showRegionInfo('sul')">
+                    <div class="region-icon">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
+                    <h3 class="region-name">Sul</h3>
+                    <div class="region-stats">
+                        <div class="region-stat">
+                            <span class="region-stat-number">18</span>
+                            <span class="region-stat-label">Instituições</span>
+                        </div>
+                        <div class="region-stat">
+                            <span class="region-stat-number">12</span>
+                            <span class="region-stat-label">Centros</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="regionInfo" class="region-info">
+                Clique em uma região para ver informações detalhadas
+            </div>
+        </div>
+
+        <!-- Timeline Interativa -->
+        <div class="interactive-timeline">
+            <h2 style="text-align: center; margin-bottom: 30px;">📅 Linha do Tempo Interativa</h2>
+            <div class="timeline-controls">
+                <button class="timeline-control active" onclick="changeTimeline(0)">1990-2000</button>
+                <button class="timeline-control" onclick="changeTimeline(1)">2001-2010</button>
+                <button class="timeline-control" onclick="changeTimeline(2)">2011-2020</button>
+                <button class="timeline-control" onclick="changeTimeline(3)">2021-2024</button>
+            </div>
+            <div class="timeline-slider">
+                <div class="timeline-slide active" id="timeline1">
+                    <div class="timeline-slide-year">1990</div>
+                    <h2 class="timeline-slide-title">Constituição Federal e ECA</h2>
+                    <p class="timeline-slide-content">A Constituição de 1988 e o ECA (1990) estabelecem as bases para a proteção dos direitos das pessoas com deficiência no Brasil.</p>
+                    <div class="timeline-slide-stats">
+                        <div class="timeline-slide-stat">
+                            <span class="timeline-slide-stat-number">2</span>
+                            <span class="timeline-slide-stat-label">Leis</span>
+                        </div>
+                        <div class="timeline-slide-stat">
+                            <span class="timeline-slide-stat-number">5</span>
+                            <span class="timeline-slide-stat-label">Direitos</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-slide" id="timeline2">
+                    <div class="timeline-slide-year">2000</div>
+                    <h2 class="timeline-slide-title">Lei de Acessibilidade</h2>
+                    <p class="timeline-slide-content">Lei 10.098/2000 estabelece normas para eliminação de barreiras arquitetônicas e urbanísticas.</p>
+                    <div class="timeline-slide-stats">
+                        <div class="timeline-slide-stat">
+                            <span class="timeline-slide-stat-number">4</span>
+                            <span class="timeline-slide-stat-label">Leis</span>
+                        </div>
+                        <div class="timeline-slide-stat">
+                            <span class="timeline-slide-stat-number">12</span>
+                            <span class="timeline-slide-stat-label">Direitos</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-slide" id="timeline3">
+                    <div class="timeline-slide-year">2012</div>
+                    <h2 class="timeline-slide-title">Lei Berenice Piana</h2>
+                    <p class="timeline-slide-content">Marco legal para o TEA. Reconhece o autista como pessoa com deficiência e estabelece direitos específicos.</p>
+                    <div class="timeline-slide-stats">
+                        <div class="timeline-slide-stat">
+                            <span class="timeline-slide-stat-number">8</span>
+                            <span class="timeline-slide-stat-label">Leis</span>
+                        </div>
+                        <div class="timeline-slide-stat">
+                            <span class="timeline-slide-stat-number">25</span>
+                            <span class="timeline-slide-stat-label">Direitos</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-slide" id="timeline4">
+                    <div class="timeline-slide-year">2024</div>
+                    <h2 class="timeline-slide-title">Atualizações Recentes</h2>
+                    <p class="timeline-slide-content">Novas leis e decretos ampliam direitos e garantem maior inclusão social e educacional.</p>
+                    <div class="timeline-slide-stats">
+                        <div class="timeline-slide-stat">
+                            <span class="timeline-slide-stat-number">15</span>
+                            <span class="timeline-slide-stat-label">Leis</span>
+                        </div>
+                        <div class="timeline-slide-stat">
+                            <span class="timeline-slide-stat-number">45</span>
+                            <span class="timeline-slide-stat-label">Direitos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="timeline-nav">
+                <button class="timeline-nav-button" onclick="previousTimeline()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="timeline-nav-button" onclick="nextTimeline()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section" id="faq">
+            <div class="faq-header">
+                <h2>❓ Perguntas Frequentes</h2>
+                <p>Tire suas dúvidas sobre os direitos das pessoas com TEA e AH/SD</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3>Como obter a CIPTEA?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        A Carteira de Identificação da Pessoa com TEA pode ser solicitada através dos órgãos de assistência social do seu município, apresentando laudo médico e documentos pessoais.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3>Quais são os direitos educacionais para AH/SD?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Incluem aceleração de estudos, currículo adaptado, salas de recursos multifuncionais e programas de enriquecimento curricular.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3>Como funciona a isenção de impostos para veículos?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Pessoas com deficiência têm direito à isenção de IPI, IOF, ICMS e IPVA na compra de veículos adaptados, mediante avaliação pericial.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3>Onde encontrar atendimento especializado?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        O SUS oferece atendimento em centros de reabilitação. Além disso, existem associações como AMA, APAE e centros de referência estaduais.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="newsletter-section">
+            <div class="newsletter-content">
+                <div class="newsletter-icon">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                <h2 class="newsletter-title">Fique por dentro das novidades</h2>
+                <p class="newsletter-text">Receba atualizações sobre novas leis, direitos e recursos para TEA e AH/SD diretamente no seu email.</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail" required>
+                    <button type="submit" class="newsletter-button">Inscrever-se</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Moderno -->
+    <footer class="footer-modern">
+        <div class="footer-grid">
+            <div class="footer-about">
+                <h3>Sistema Nacional de Direitos</h3>
+                <p>Plataforma oficial de consulta e orientação sobre os direitos das pessoas com Transtorno do Espectro Autista e Altas Habilidades/Superdotação no Brasil.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Links Rápidos</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Leis TEA</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Leis AH/SD</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Direitos</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Recursos</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Institucional</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Sobre nós</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contato</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Termos de uso</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Privacidade</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Transparência</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contato</h4>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>0800 123 4567</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>contato@direitosteaahsd.gov.br</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Brasília - DF, Brasil</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2024 Sistema Nacional de Direitos TEA e AH/SD. Todos os direitos reservados.</div>
+            <div class="footer-bottom-links">
+                <a href="#">Mapa do site</a>
+                <a href="#">Acessibilidade</a>
+                <a href="#">Termos legais</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar AOS
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+
+            // Esconder loading após 2 segundos
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 2000);
+
+            // Animar números
+            animateNumbers();
+
+            // Inicializar gráficos
+            initCharts();
+
+            // Mostrar toast de boas-vindas
+            showToast('Bem-vindo à Plataforma de Direitos TEA e AH/SD!');
+
+            // Header stats animation
+            animateHeaderStats();
+        });
+
+        // Animar números do header
+        function animateHeaderStats() {
+            animateValue('headerStat1', 0, 15, 2000);
+            animateValue('headerStat2', 0, 8, 2000);
+            animateValue('headerStat3', 0, 45, 2000);
+            animateValue('headerStat4', 0, 12, 2000);
+        }
+
+        // Animar números
+        function animateNumbers() {
+            animateValue('teaLawCount', 0, 15, 2000);
+            animateValue('ahsdLawCount', 0, 8, 2000);
+            animateValue('institutionCount', 0, 92, 2000);
+            animateValue('benefitedCount', 0, 2.5, 2000);
+        }
+
+        function animateValue(elementId, start, end, duration) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    element.textContent = end + (elementId === 'benefitedCount' ? 'M' : '');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (elementId === 'benefitedCount' ? 'M' : '');
+                }
+            }, 16);
+        }
+
+        // Gráficos
+        let teaChart, ahsdChart;
+
+        function initCharts() {
+            const ctxTea = document.getElementById('chartTea')?.getContext('2d');
+            if (ctxTea) {
+                teaChart = new Chart(ctxTea, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Direitos Implementados', 'Em Implementação', 'Pendentes'],
+                        datasets: [{
+                            data: [75, 15, 10],
+                            backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: getComputedStyle(document.body).getPropertyValue('--text-primary') }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Implementação - TEA',
+                                color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                            }
+                        }
+                    }
+                });
+            }
+
+            const ctxAHSD = document.getElementById('chartAHSD')?.getContext('2d');
+            if (ctxAHSD) {
+                ahsdChart = new Chart(ctxAHSD, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Direitos Implementados', 'Em Implementação', 'Pendentes'],
+                        datasets: [{
+                            data: [60, 25, 15],
+                            backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: getComputedStyle(document.body).getPropertyValue('--text-primary') }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Implementação - AH/SD',
+                                color: getComputedStyle(document.body).getPropertyValue('--text-primary')
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Alternar gráficos
+        function switchChart(type) {
+            // Atualizar tabs
+            document.querySelectorAll('.chart-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Atualizar dados dos gráficos (simulação)
+            if (type === 'tea') {
+                teaChart.data.datasets[0].data = [75, 15, 10];
+            } else if (type === 'ahsd') {
+                teaChart.data.datasets[0].data = [60, 25, 15];
+            } else {
+                teaChart.data.datasets[0].data = [68, 20, 12];
+            }
+            teaChart.update();
+        }
+
+        // Modo Escuro
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+        const text = themeToggle.querySelector('span');
+
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.className = 'fas fa-moon';
+                text.textContent = 'Modo Escuro';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+                text.textContent = 'Modo Claro';
+                localStorage.setItem('theme', 'dark');
+            }
+            
+            // Atualizar gráficos
+            if (teaChart) teaChart.update();
+            if (ahsdChart) ahsdChart.update();
+        });
+
+        // Carregar preferência de tema
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            icon.className = 'fas fa-sun';
+            text.textContent = 'Modo Claro';
+        }
+
+        // Scroll suave
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Voltar ao topo
+        document.getElementById('backToTop').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Mostrar/esconder botão voltar ao topo
+        window.addEventListener('scroll', () => {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 500) {
+                backToTop.style.opacity = '1';
+                backToTop.style.visibility = 'visible';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.visibility = 'hidden';
+            }
+        });
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function hideToast() {
+            document.getElementById('toast').classList.remove('show');
+        }
+
+        // Mapa interativo
+        function showRegionInfo(region) {
+            const infoDiv = document.getElementById('regionInfo');
+            const regions = {
+                'norte': '🌳 Região Norte: 12 instituições especializadas, 8 centros de referência, 16 associações de apoio. Destaque: Amazonas e Pará concentram maior número de recursos.',
+                'nordeste': '🏖️ Região Nordeste: 22 instituições, 15 centros de referência, 28 associações de apoio. Destaque: Bahia e Pernambuco têm a maior rede de atendimento.',
+                'centro-oeste': '🌵 Região Centro-Oeste: 15 instituições, 10 centros de referência, 20 associações de apoio. Destaque: Brasília é o principal polo de atendimento.',
+                'sudeste': '🏙️ Região Sudeste: 25 instituições, 18 centros de referência, 32 associações de apoio. Destaque: São Paulo e Rio de Janeiro têm a maior concentração.',
+                'sul': '🌲 Região Sul: 18 instituições, 12 centros de referência, 24 associações de apoio. Destaque: Rio Grande do Sul e Paraná lideram em número de atendimentos.'
+            };
+            
+            infoDiv.innerHTML = regions[region];
+            infoDiv.style.animation = 'pulse-glow 0.5s ease';
+            setTimeout(() => {
+                infoDiv.style.animation = '';
+            }, 500);
+        }
+
+        // Timeline interativa
+        let currentTimeline = 0;
+        const timelineSlides = document.querySelectorAll('.timeline-slide');
+
+        function changeTimeline(index) {
+            // Atualizar controles
+            document.querySelectorAll('.timeline-control').forEach((control, i) => {
+                if (i === index) {
+                    control.classList.add('active');
+                } else {
+                    control.classList.remove('active');
+                }
+            });
+
+            // Atualizar slides
+            timelineSlides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            currentTimeline = index;
+        }
+
+        function nextTimeline() {
+            currentTimeline = (currentTimeline + 1) % timelineSlides.length;
+            changeTimeline(currentTimeline);
+        }
+
+        function previousTimeline() {
+            currentTimeline = (currentTimeline - 1 + timelineSlides.length) % timelineSlides.length;
+            changeTimeline(currentTimeline);
+        }
+
+        // FAQ
+        function toggleFAQ(element) {
+            element.classList.toggle('active');
+            
+            // Fechar outros FAQs
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== element && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Newsletter
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            showToast(`Inscrição realizada com sucesso para o email: ${email}`);
+            event.target.reset();
+        }
+
+        // Compartilhar
+        document.getElementById('shareButton').addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Plataforma de Direitos TEA e AH/SD',
+                    text: 'Plataforma oficial de consulta às leis e direitos das pessoas com TEA e Altas Habilidades/Superdotação no Brasil.',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast('Link copiado para a área de transferência!');
+            }
+        });
+
+        // Ajuda
+        document.getElementById('helpButton').addEventListener('click', () => {
+            showToast('Precisa de ajuda? Entre em contato pelo 0800 123 4567');
+        });
+
+        // Atalhos de teclado
+        document.addEventListener('keydown', (e) => {
+            // Alt + T: Modo escuro
+            if (e.altKey && e.key === 't') {
+                themeToggle.click();
+            }
+            
+            // Alt + H: Voltar ao topo
+            if (e.altKey && e.key === 'h') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Alt + S: Compartilhar
+            if (e.altKey && e.key === 's') {
+                document.getElementById('shareButton').click();
+            }
+            
+            // Alt + F: FAQ
+            if (e.altKey && e.key === 'f') {
+                scrollToSection('faq');
+            }
+            
+            // Alt + L: Leis
+            if (e.altKey && e.key === 'l') {
+                scrollToSection('laws');
+            }
+            
+            // Alt + R: Recursos
+            if (e.altKey && e.key === 'r') {
+                scrollToSection('resources');
+            }
+        });
+
+        // Detectar scroll para animações
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos para animação de scroll
+        document.querySelectorAll('.info-card-modern, .region-card, .faq-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Buscar dados atualizados (simulação)
+        async function fetchUpdatedData() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve({
+                        teaLaws: 15,
+                        ahsdLaws: 8,
+                        institutions: 92,
+                        benefited: 2.5
+                    });
+                }, 1500);
+            });
+        }
+
+        // Atualizar dados periodicamente
+        setInterval(async () => {
+            const data = await fetchUpdatedData();
+            document.getElementById('teaLawCount').textContent = data.teaLaws;
+            document.getElementById('ahsdLawCount').textContent = data.ahsdLaws;
+            document.getElementById('institutionCount').textContent = data.institutions;
+            document.getElementById('benefitedCount').textContent = data.benefited + 'M';
+        }, 300000); // Atualizar a cada 5 minutos
+
+        // Erro handling
+        window.addEventListener('error', (e) => {
+            console.error('Erro na página:', e.error);
+            showToast('Ocorreu um erro. Por favor, recarregue a página.');
+        });
+
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                const timing = performance.getElementsByTagName('navigation')[0];
+                console.log('Tempo de carregamento:', timing.domContentLoadedEventEnd - timing.domContentLoadedEventStart, 'ms');
+            });
+        }
+
+        // Service Worker (se quiser funcionalidade offline)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(err => {
+                console.log('Service Worker não registrado:', err);
+            });
+        }
+
+        console.log('🚀 Plataforma de Direitos TEA e AH/SD carregada com sucesso!');
+    </script>
+</body>
+</html>

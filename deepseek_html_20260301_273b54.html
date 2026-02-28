@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VozPlay · Chamada + Jogo + Mods</title>
+    <!-- Manifest PWA -->
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22VozPlay%22%2C%22short_name%22%3A%22VozPlay%22%2C%22start_url%22%3A%22%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%2310151f%22%2C%22theme_color%22%3A%22%239933ff%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%239933ff'%3E%3Ccircle cx='50' cy='50' r='45' fill='%239933ff'/%3E%3Ctext x='22' y='75' font-size='70' fill='white'%3E🎮%3C/text%3E%3C/svg%3E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image/svg+xml%22%7D%5D%7D">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #0a0c15;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        /* App principal */
+        #app {
+            width: 100%;
+            max-width: 420px;
+            height: 750px;
+            background: #141b29;
+            border-radius: 40px 40px 30px 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 3px #2a3b55;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            background: #0d1321;
+            padding: 16px 20px 8px;
+            display: flex;
+            justify-content: space-between;
+            color: #aac3d9;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-bottom: 2px solid #2a3f5a;
+        }
+
+        /* Tabs de navegação */
+        .tabs {
+            display: flex;
+            background: #101826;
+            border-bottom: 2px solid #2e405b;
+            gap: 2px;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 16px 0 12px;
+            font-weight: 700;
+            color: #8da6c2;
+            transition: 0.2s;
+            border-bottom: 4px solid transparent;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            color: #bb99ff;
+            border-bottom: 4px solid #9933ff;
+            background: linear-gradient(0deg, #1e2a3f, transparent);
+        }
+
+        .tab i {
+            margin-right: 6px;
+        }
+
+        /* Conteúdo das abas */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 14px;
+            background: #141e2d;
+            scrollbar-width: thin;
+            scrollbar-color: #4d6a8f #1d2c40;
+        }
+
+        /* Tela de Chamada */
+        .call-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #2a3d60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            border: 4px solid #9933ff;
+            color: #e0c0ff;
+            margin-top: 10px;
+        }
+
+        .contact-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 5px black;
+        }
+
+        .call-status {
+            background: #1d3147;
+            padding: 8px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #b6d0f0;
+            border: 1px solid #5f7da0;
+        }
+
+        .timer {
+            font-size: 2.8rem;
+            font-weight: 700;
+            font-family: monospace;
+            background: #0f1d30;
+            padding: 12px 40px;
+            border-radius: 60px;
+            border: 2px solid #9933ff;
+            color: #e2d1ff;
+            letter-spacing: 4px;
+            margin: 5px 0;
+        }
+
+        .call-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .call-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #263e5a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            border: 2px solid #506f94;
+            transition: 0.1s;
+            cursor: pointer;
+        }
+
+        .call-btn span {
+            font-size: 0.65rem;
+            margin-top: 2px;
+        }
+
+        .call-btn:active {
+            transform: scale(0.92);
+            background: #34567a;
+        }
+
+        .btn-red {
+            background: #b53b4a;
+            border-color: #ff8a9c;
+        }
+
+        .btn-green {
+            background: #1f8f7c;
+            border-color: #7ff5e0;
+        }
+
+        .btn-purple {
+            background: #6a3b9e;
+            border-color: #c58aff;
+        }
+
+        /* Área do jogo */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .game-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #bb99ff;
+        }
+
+        canvas {
+            background: #0b1422;
+            border-radius: 30px;
+            border: 4px solid #4f3b7a;
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: block;
+            box-shadow: 0 15px 30px black;
+            touch-action: none;
+        }
+
+        .score-box {
+            background: #1f2e44;
+            padding: 10px 30px;
+            border-radius: 60px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #dbbaff;
+            border: 2px solid #9f6eff;
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 20px;
+        }
+
+        .game-btn {
+            background: #262f44;
+            border: none;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid #7361aa;
+            cursor: pointer;
+        }
+
+        /* MODS - Cards de personalização */
+        .mods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .mod-card {
+            background: #1d2c40;
+            border-radius: 24px;
+            padding: 16px 12px;
+            border: 2px solid #3e5680;
+            text-align: center;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .mod-card.active {
+            border-color: #bb99ff;
+            background: #2c3d60;
+            box-shadow: 0 0 15px #9933ff66;
+        }
+
+        .mod-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .mod-name {
+            font-weight: 700;
+            color: white;
+        }
+
+        .mod-desc {
+            font-size: 0.8rem;
+            color: #adc4e6;
+        }
+
+        .mod-badge {
+            background: #4f3c8c;
+            padding: 4px 12px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            color: white;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Background overlay */
+        .bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: #0c1421f2;
+            backdrop-filter: blur(8px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            border-radius: inherit;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .bg-overlay.show {
+            display: flex;
+        }
+
+        .bg-icon {
+            font-size: 5rem;
+            color: #bb99ff;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        .btn-return {
+            background: #9933ff;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: white;
+            box-shadow: 0 10px 30px black;
+        }
+
+        .footer-bar {
+            background: #0f172a;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid #2e4562;
+            color: #7f9bc2;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Status bar -->
+        <div class="status-bar">
+            <span><i class="fas fa-signal"></i> 5G+</span>
+            <span><i class="fas fa-phone-alt"></i> VozPlay</span>
+            <span><i class="fas fa-battery-full"></i> 92%</span>
+        </div>
+
+        <!-- Tabs principais -->
+        <div class="tabs" id="tabsContainer">
+            <div class="tab active" data-tab="call"><i class="fas fa-phone"></i> Chamada</div>
+            <div class="tab" data-tab="game"><i class="fas fa-gamepad"></i> Jogo</div>
+            <div class="tab" data-tab="mods"><i class="fas fa-paint-roller"></i> Mods</div>
+        </div>
+
+        <!-- Conteúdo dinâmico -->
+        <div class="content" id="contentArea">
+            <!-- Aba Chamada (inicial) -->
+            <div id="callTab" style="display: block;">
+                <div class="call-container">
+                    <div class="contact-avatar"><i class="fas fa-user-astronaut"></i></div>
+                    <div class="contact-name">Luna</div>
+                    <div class="call-status" id="callStatus">🔊 Em chamada</div>
+                    <div class="timer" id="timerDisplay">00:00</div>
+
+                    <div class="call-buttons">
+                        <div class="call-btn" id="muteBtn"><i class="fas fa-microphone"></i><span>Mutar</span></div>
+                        <div class="call-btn" id="speakerBtn"><i class="fas fa-volume-up"></i><span>Alto-falante</span></div>
+                        <div class="call-btn" id="bgBtn"><i class="fas fa-arrow-right-to-bracket"></i><span>2º plano</span></div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px;">
+                        <div class="call-btn btn-red" id="endCallBtn"><i class="fas fa-phone-slash"></i><span>Encerrar</span></div>
+                        <div class="call-btn btn-green" id="answerCallBtn"><i class="fas fa-phone-alt"></i><span>Atender</span></div>
+                    </div>
+
+                    <div style="margin-top: 10px; color: #a0bad2; font-size:0.9rem;">
+                        <i class="fas fa-shield-alt"></i> Chamada protegida · Mods ativos: <span id="activeModsCall">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Jogo (inicial oculta) -->
+            <div id="gameTab" style="display: none;">
+                <div class="game-container">
+                    <div class="game-title"><i class="fas fa-bolt"></i> Space Dodger</div>
+                    <canvas id="gameCanvas" width="350" height="350"></canvas>
+                    <div class="score-box">Pontos: <span id="scoreDisplay">0</span></div>
+                    <div class="game-controls">
+                        <button class="game-btn" id="startGameBtn"><i class="fas fa-play"></i> Iniciar</button>
+                        <button class="game-btn" id="resetGameBtn"><i class="fas fa-undo"></i> Reset</button>
+                    </div>
+                    <p style="color: #8aa9d1;">Use as setas ou clique nas laterais</p>
+                </div>
+            </div>
+
+            <!-- Aba Mods -->
+            <div id="modsTab" style="display: none;">
+                <div class="mods-grid" id="modsList">
+                    <!-- Será preenchido via js -->
+                </div>
+                <div style="margin-top: 20px; background: #1f304a; border-radius: 30px; padding: 15px; text-align: center;">
+                    <p><i class="fas fa-puzzle-piece"></i> Mods ativos: <span id="modCounter">0</span></p>
+                    <p style="font-size:0.85rem; color:#b4ceff;">Mods funcionam na chamada e no jogo</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rodapé com status -->
+        <div class="footer-bar">
+            <span><i class="fas fa-dragon"></i> Mods: <span id="footerModCount">0</span></span>
+            <span><i class="fas fa-gamepad"></i> Jogo pronto</span>
+            <span><i class="fas fa-microphone"></i> Ativo</span>
+        </div>
+
+        <!-- OVERLAY de segundo plano -->
+        <div class="bg-overlay" id="bgOverlay">
+            <div class="bg-icon"><i class="fas fa-headphones-alt"></i></div>
+            <div style="font-size: 2rem; font-weight: 800;">Em 2º plano</div>
+            <p style="color: #c6dcff; max-width: 280px; text-align: center;">Chamada ativa · Jogo rodando · Mods aplicados</p>
+            <div style="font-size: 2rem; font-family: monospace; margin: 10px;" id="bgTimer">00:00</div>
+            <button class="btn-return" id="returnBtn"><i class="fas fa-arrow-left"></i> Voltar</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ------------------- ELEMENTOS ----------------------
+            const tabs = document.querySelectorAll('.tab');
+            const callTab = document.getElementById('callTab');
+            const gameTab = document.getElementById('gameTab');
+            const modsTab = document.getElementById('modsTab');
+            
+            // Chamada
+            const callStatus = document.getElementById('callStatus');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const bgTimer = document.getElementById('bgTimer');
+            const muteBtn = document.getElementById('muteBtn');
+            const speakerBtn = document.getElementById('speakerBtn');
+            const bgBtn = document.getElementById('bgBtn');
+            const endCallBtn = document.getElementById('endCallBtn');
+            const answerCallBtn = document.getElementById('answerCallBtn');
+            const bgOverlay = document.getElementById('bgOverlay');
+            const returnBtn = document.getElementById('returnBtn');
+            
+            // Mods
+            const modsList = document.getElementById('modsList');
+            const modCounter = document.getElementById('modCounter');
+            const footerModCount = document.getElementById('footerModCount');
+            const activeModsCall = document.getElementById('activeModsCall');
+
+            // Jogo
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const startGameBtn = document.getElementById('startGameBtn');
+            const resetGameBtn = document.getElementById('resetGameBtn');
+
+            // ------------------- ESTADO GLOBAL -------------------
+            let callActive = true;          // chamada em andamento
+            let callStartTime = Date.now() - 5000; // começou há 5s
+            let timerInterval = null;
+            let muted = false;
+            let speaker = true; // padrão alto-falante
+            
+            // Mods disponíveis
+            const mods = [
+                { id: 0, name: 'Voz Robótica', icon: '🤖', desc: 'Efeito robô na chamada', active: false, gameEffect: 'nenhum' },
+                { id: 1, name: 'Eco Profundo', icon: '🌊', desc: 'Áudio com eco', active: false, gameEffect: 'nenhum' },
+                { id: 2, name: 'Mod Nave Azul', icon: '🔵', desc: 'Nave azul no jogo', active: false, gameEffect: 'skinShip' },
+                { id: 3, name: 'Trilha 8-bit', icon: '🎵', desc: 'Som de fundo retrô', active: false, gameEffect: 'som' },
+                { id: 4, name: 'Mod Invencível', icon: '🛡️', desc: 'Primeiros 5s sem dano', active: false, gameEffect: 'invincible' },
+                { id: 5, name: 'Plasma Roza', icon: '💗', desc: 'Tiros cor-de-rosa', active: false, gameEffect: 'pink' }
+            ];
+
+            // ------------------- FUNÇÕES DE MOD -------------------
+            function renderMods() {
+                modsList.innerHTML = '';
+                mods.forEach((mod, index) => {
+                    const card = document.createElement('div');
+                    card.className = `mod-card ${mod.active ? 'active' : ''}`;
+                    card.dataset.index = index;
+                    card.innerHTML = `
+                        <div class="mod-icon">${mod.icon}</div>
+                        <div class="mod-name">${mod.name}</div>
+                        <div class="mod-desc">${mod.desc}</div>
+                        <div class="mod-badge">${mod.active ? '✔ ativo' : 'clique para ativar'}</div>
+                    `;
+                    card.addEventListener('click', () => {
+                        mod.active = !mod.active;
+                        renderMods();
+                        updateModCounters();
+                        if (mod.name === 'Mod Nave Azul' && mod.active) {
+                            shipColor = '#33aaff';
+                        } else if (mod.name === 'Mod Nave Azul' && !mod.active) {
+                            shipColor = '#ffcc33';
+                        }
+                        if (mod.name === 'Plasma Roza' && mod.active) {
+                            bulletColor = '#ff69b4';
+                        } else if (mod.name === 'Plasma Roza' && !mod.active) {
+                            bulletColor = '#ff3333';
+                        }
+                    });
+                    modsList.appendChild(card);
+                });
+            }
+
+            function updateModCounters() {
+                const activeCount = mods.filter(m => m.active).length;
+                modCounter.innerText = activeCount;
+                footerModCount.innerText = activeCount;
+                if (activeModsCall) activeModsCall.innerText = activeCount;
+            }
+
+            // Efeitos visuais do mod no jogo
+            let shipColor = '#ffcc33';
+            let bulletColor = '#ff3333';
+
+            // ------------------- CHAMADA DE VOZ -------------------
+            function startTimer() {
+                if (timerInterval) clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    if (!callActive) return;
+                    const elapsed = Math.floor((Date.now() - callStartTime) / 1000);
+                    const mins = Math.floor(elapsed / 60);
+                    const secs = elapsed % 60;
+                    const timeStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                    timerDisplay.innerText = timeStr;
+                    bgTimer.innerText = timeStr;
+                }, 200);
+            }
+            startTimer();
+
+            muteBtn.addEventListener('click', () => {
+                muted = !muted;
+                muteBtn.innerHTML = muted ? '<i class="fas fa-microphone-slash"></i><span>Mudo</span>' : '<i class="fas fa-microphone"></i><span>Mutar</span>';
+                muteBtn.style.background = muted ? '#b53b4a' : '#263e5a';
+                callStatus.innerText = muted ? '🔇 Mudo ativado' : '🔊 Chamada ativa';
+                setTimeout(() => { if(callActive) callStatus.innerText = '🔊 Em chamada'; }, 1000);
+            });
+
+            speakerBtn.addEventListener('click', () => {
+                speaker = !speaker;
+                speakerBtn.innerHTML = speaker ? '<i class="fas fa-volume-up"></i><span>Alto-falante</span>' : '<i class="fas fa-volume-off"></i><span>Fone</span>';
+                speakerBtn.style.background = speaker ? '#1f8f7c' : '#263e5a';
+            });
+
+            bgBtn.addEventListener('click', () => {
+                bgOverlay.classList.add('show');
+                callStatus.innerText = '📱 Em segundo plano';
+            });
+
+            returnBtn.addEventListener('click', () => {
+                bgOverlay.classList.remove('show');
+                callStatus.innerText = '🔊 Em chamada';
+            });
+
+            endCallBtn.addEventListener('click', () => {
+                callActive = false;
+                clearInterval(timerInterval);
+                timerDisplay.innerText = '00:00';
+                bgTimer.innerText = '00:00';
+                callStatus.innerText = '📴 Chamada encerrada';
+                endCallBtn.style.background = '#555';
+                // Simular nova chamada após 3s (demo)
+                setTimeout(() => {
+                    callActive = true;
+                    callStartTime = Date.now();
+                    startTimer();
+                    callStatus.innerText = '🔊 Em chamada';
+                    endCallBtn.style.background = '#b53b4a';
+                }, 3000);
+            });
+
+            answerCallBtn.addEventListener('click', () => {
+                if (!callActive) {
+                    callActive = true;
+                    callStartTime = Date.now();
+                    startTimer();
+                    callStatus.innerText = '🔊 Em chamada';
+                }
+            });
+
+            // ------------------- JOGO SPACE DODGER -------------------
+            let gameActive = false;
+            let player = { x: 175, y: 300, width: 30, height: 30 };
+            let bullets = [];
+            let score = 0;
+            let keys = {};
+
+            function drawGame() {
+                ctx.clearRect(0, 0, 350, 350);
+                // fundo estrelado
+                ctx.fillStyle = '#0b1220';
+                ctx.fillRect(0, 0, 350, 350);
+                
+                // desenha player (nave)
+                ctx.fillStyle = shipColor;
+                ctx.beginPath();
+                ctx.moveTo(player.x, player.y);
+                ctx.lineTo(player.x + 20, player.y + 30);
+                ctx.lineTo(player.x - 20, player.y + 30);
+                ctx.closePath();
+                ctx.fill();
+                
+                // desenha tiros (com cor mod)
+                ctx.fillStyle = bulletColor;
+                bullets.forEach(b => {
+                    ctx.fillRect(b.x - 3, b.y - 8, 6, 16);
+                });
+
+                // inimigos (apenas exemplo)
+                ctx.fillStyle = '#aa44ff';
+                ctx.fillRect(150, 100, 25, 25);
+                ctx.fillStyle = '#ffaa44';
+                ctx.fillRect(250, 180, 20, 20);
+
+                if (gameActive) requestAnimationFrame(drawGame);
+            }
+
+            function updateGame() {
+                if (!gameActive) return;
+                // movimento (setas)
+                if (keys['ArrowLeft'] && player.x > 25) player.x -= 4;
+                if (keys['ArrowRight'] && player.x < 325) player.x += 4;
+                if (keys['ArrowUp'] && player.y > 50) player.y -= 4;
+                if (keys['ArrowDown'] && player.y < 300) player.y += 4;
+
+                // tiros automáticos (mod: mais tiros se ativo)
+                if (Math.random() < 0.05) {
+                    bullets.push({ x: player.x, y: player.y - 10 });
+                }
+                // move tiros
+                bullets = bullets.filter(b => {
+                    b.y -= 5;
+                    return b.y > -20;
+                });
+
+                // colisão simples com inimigo (aumenta pontuação)
+                if (Math.random() < 0.02) {
+                    score += 1;
+                    scoreDisplay.innerText = score;
+                }
+
+                setTimeout(updateGame, 50);
+            }
+
+            startGameBtn.addEventListener('click', () => {
+                if (!gameActive) {
+                    gameActive = true;
+                    drawGame();
+                    updateGame();
+                }
+            });
+
+            resetGameBtn.addEventListener('click', () => {
+                score = 0;
+                bullets = [];
+                player = { x: 175, y: 300, width: 30, height: 30 };
+                scoreDisplay.innerText = '0';
+            });
+
+            window.addEventListener('keydown', (e) => keys[e.key] = true);
+            window.addEventListener('keyup', (e) => keys[e.key] = false);
+
+            // Controles touch para o canvas (simples)
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                if (x > 50 && x < 300) player.x = x;
+                if (y > 50 && y < 320) player.y = y;
+            });
+
+            // ------------------- TABS ----------------------
+            tabs.forEach(t => {
+                t.addEventListener('click', () => {
+                    tabs.forEach(tab => tab.classList.remove('active'));
+                    t.classList.add('active');
+                    const tabName = t.dataset.tab;
+                    callTab.style.display = tabName === 'call' ? 'block' : 'none';
+                    gameTab.style.display = tabName === 'game' ? 'block' : 'none';
+                    modsTab.style.display = tabName === 'mods' ? 'block' : 'none';
+                });
+            });
+
+            // ------------------- INICIALIZAÇÃO -------------------
+            renderMods();
+            updateModCounters();
+            drawGame(); // desenho estático inicial
+        })();
+    </script>
+
+    <!-- Service Worker para background (simulação) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                self.addEventListener('install', (e) => self.skipWaiting());
+                self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
+                self.addEventListener('message', (e) => {});
+                `;
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>
