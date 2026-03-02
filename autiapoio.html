@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espaço Autista · Acolhimento</title>
+    <!-- Fonte simples e acessível -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F7F4; /* tom quente e suave */
+            color: #1e2b3c;
+            line-height: 1.6;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* Cabeçalho */
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #dbe4e8;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #2c4c6b;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            background-color: #e0dcd5;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin-left: 10px;
+            color: #2c4c6b;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #2c4c6b;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        nav a:hover {
+            border-bottom-color: #b58c7c; /* tom suave de terracota */
+        }
+
+        /* Seção de boas-vindas */
+        .hero {
+            background-color: #ffffffd9;
+            padding: 3rem 2.5rem;
+            border-radius: 28px;
+            margin-bottom: 3rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+            border: 1px solid #ece6de;
+        }
+
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 500;
+            line-height: 1.3;
+            margin-bottom: 1.2rem;
+            color: #1d3b4f;
+        }
+
+        .hero h1 strong {
+            font-weight: 600;
+            background: linear-gradient(145deg, #e8ded5, #f1ebe5);
+            padding: 0.1rem 0.4rem;
+            border-radius: 12px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 750px;
+            color: #2f455b;
+            margin-bottom: 2rem;
+        }
+
+        .botoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .botao {
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-block;
+        }
+
+        .botao.primario {
+            background-color: #2c4c6b;
+            color: white;
+            border: 1px solid #2c4c6b;
+        }
+
+        .botao.primario:hover {
+            background-color: #1f3b52;
+            border-color: #1f3b52;
+        }
+
+        .botao.secundario {
+            background-color: transparent;
+            color: #2c4c6b;
+            border: 1px solid #b0c2ce;
+        }
+
+        .botao.secundario:hover {
+            background-color: #e7eef3;
+        }
+
+        /* Cartões de apoio */
+        .grade {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .cartao {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 24px;
+            border: 1px solid #e0d6cc;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .cartao:hover {
+            box-shadow: 0 15px 25px -8px rgba(44, 76, 107, 0.12);
+        }
+
+        .cartao h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #335c7e;
+        }
+
+        .cartao p {
+            color: #3b4d5e;
+            margin-bottom: 1.5rem;
+        }
+
+        .cartao a {
+            color: #2c4c6b;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px dotted #b58c7c;
+        }
+
+        /* Frase de impacto */
+        .citacao {
+            background-color: #e9e2da;
+            padding: 2.5rem;
+            border-radius: 40px;
+            margin: 3rem 0;
+            text-align: center;
+            border-left: 10px solid #a48d7b;
+        }
+
+        .citacao p {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #1f3a4c;
+            max-width: 800px;
+            margin: 0 auto 1rem;
+        }
+
+        .citacao .autor {
+            font-size: 1rem;
+            color: #4d6275;
+            letter-spacing: 1px;
+        }
+
+        /* Rodapé */
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid #d9d0c5;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            color: #4a5e72;
+            font-size: 0.95rem;
+        }
+
+        .seguranca {
+            background-color: #ecf1f5;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1.2rem; }
+            header { flex-direction: column; align-items: start; gap: 1rem; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                🌿 AutiApoio <span>feito por autistas</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Fórum</a></li>
+                    <li><a href="#">Recursos</a></li>
+                    <li><a href="#">Mentoria</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h1>Você não está sozinhe. <strong>Este espaço é seu.</strong></h1>
+                <p>Aqui o jeito de sentir e pensar é acolhido sem máscaras. Um lugar seguro para autistas compartilharem, pedirem ajuda e encontrarem informação.</p>
+                <div class="botoes">
+                    <a href="#" class="botao primario">💬 Participar da roda de conversa</a>
+                    <a href="#" class="botao secundario">📘 Guia de primeiros passos</a>
+                </div>
+            </section>
+
+            <section class="grade">
+                <div class="cartao">
+                    <h3>🧩 Fórum acolhedor</h3>
+                    <p>Espaço moderado por pessoas autistas. Troque ideias sobre masking, relacionamentos, trabalho e descobertas.</p>
+                    <a href="#">Acessar fórum →</a>
+                </div>
+                <div class="cartao">
+                    <h3>🤝 Mentoria entre pares</h3>
+                    <p>Converse com outro autista que já passou por desafios parecidos. Um apoio humano e horizontal.</p>
+                    <a href="#">Pedir mentoria →</a>
+                </div>
+                <div class="cartao">
+                    <h3>📚 Biblioteca sensível</h3>
+                    <p>Textos, vídeos e áudios sobre direitos, terapia, autoconhecimento e defesa pessoal.</p>
+                    <a href="#">Explorar recursos →</a>
+                </div>
+                <div class="cartao">
+                    <h3>🧘 Regulação emocional</h3>
+                    <p>Áudios guiados, pautas de autorregulação e dicas para momentos de crise.</p>
+                    <a href="#">Acessar agora →</a>
+                </div>
+            </section>
+
+            <div class="citacao">
+                <p>“Nada sobre nós, sem nós. Aqui quem escuta e acolhe também é autista.”</p>
+                <div class="autor">— comunidade AutiApoio</div>
+            </div>
+        </main>
+
+        <footer>
+            <div>🌱 AutiApoio · 2025</div>
+            <div class="seguranca">🔒 Espaço moderado · Respeito é a base</div>
+            <div>contato@autiapoio.br (exemplo)</div>
+        </footer>
+    </div>
+</body>
+</html>
