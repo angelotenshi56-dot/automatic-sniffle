@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PA - Programação e Algoritmos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 0;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        nav {
+            background: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            color: #764ba2;
+            background: #f0f0f0;
+        }
+
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 20px 0 10px;
+            font-size: 1.5em;
+        }
+
+        .intro-text {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .tip {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 0;
+            border-radius: 0 0 10px 10px;
+            text-align: center;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Programação & Algoritmos</h1>
+            <p>Desvende os segredos da computação e torne-se um mestre na arte de programar</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#conceitos">Conceitos Básicos</a></li>
+                <li><a href="#algoritmos">Algoritmos</a></li>
+                <li><a href="#estruturas">Estruturas de Dados</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+            </ul>
+        </nav>
+
+        <section id="home">
+            <h2>Bem-vindo ao Mundo da Programação</h2>
+            <p class="intro-text">A programação é a arte de instruir computadores para resolver problemas e criar soluções inovadoras. Através de algoritmos bem estruturados, podemos transformar ideias em realidade digital.</p>
+            
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>Lógica de Programação</h3>
+                    <p>Aprenda a pensar como um programador, desenvolvendo o raciocínio lógico necessário para resolver problemas de forma estruturada.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Eficiência</h3>
+                    <p>Descubra como criar algoritmos otimizados que executam tarefas de forma rápida e eficiente, economizando recursos computacionais.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔧</div>
+                    <h3>Prática Constante</h3>
+                    <p>A chave para o sucesso na programação é a prática regular. Resolva desafios e construa projetos para aprimorar suas habilidades.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="conceitos">
+            <h2>Conceitos Fundamentais</h2>
+            
+            <h3>O que é um Algoritmo?</h3>
+            <p>Um algoritmo é uma sequência finita de passos bem definidos que resolvem um problema ou realizam uma tarefa específica. É como uma receita de bolo: uma série de instruções que, quando seguidas corretamente, produzem um resultado esperado.</p>
+            
+            <div class="tip">
+                <strong>💡 Exemplo prático:</strong> Um algoritmo para fazer café:
+                <ol style="margin-top: 10px; margin-left: 20px;">
+                    <li>Ferva a água</li>
+                    <li>Coloque o pó de café no filtro</li>
+                    <li>Despeje a água quente sobre o pó</li>
+                    <li>Aguarde o café coar</li>
+                    <li>Sirva em uma xícara</li>
+                </ol>
+            </div>
+
+            <h3>Variáveis e Tipos de Dados</h3>
+            <p>Variáveis são espaços na memória do computador onde armazenamos informações. Cada variável tem um tipo que define que tipo de dados ela pode armazenar:</p>
+            
+            <table>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Descrição</th>
+                    <th>Exemplo</th>
+                </tr>
+                <tr>
+                    <td>Inteiro</td>
+                    <td>Números sem casas decimais</td>
+                    <td>42, -7, 0, 1000</td>
+                </tr>
+                <tr>
+                    <td>Real</td>
+                    <td>Números com casas decimais</td>
+                    <td>3.14, -2.5, 0.001</td>
+                </tr>
+                <tr>
+                    <td>Caractere</td>
+                    <td>Letras, números ou símbolos individuais</td>
+                    <td>'A', '7', '@', ' '</td>
+                </tr>
+                <tr>
+                    <td>String</td>
+                    <td>Sequência de caracteres (texto)</td>
+                    <td>"Olá, mundo!", "Programação"</td>
+                </tr>
+                <tr>
+                    <td>Booleano</td>
+                    <td>Valores lógicos</td>
+                    <td>true, false</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="algoritmos">
+            <h2>Algoritmos Clássicos</h2>
+            
+            <h3>1. Algoritmo de Busca Binária</h3>
+            <p>Um algoritmo eficiente para encontrar um elemento em uma lista ordenada. Ele funciona dividindo repetidamente pela metade a parte da lista que pode conter o elemento.</p>
+            
+            <div class="code-block">
+                <pre>
+function buscaBinaria(array, elemento) {
+    let inicio = 0;
+    let fim = array.length - 1;
+    
+    while (inicio <= fim) {
+        let meio = Math.floor((inicio + fim) / 2);
+        
+        if (array[meio] === elemento) {
+            return meio; // Elemento encontrado
+        }
+        
+        if (array[meio] < elemento) {
+            inicio = meio + 1; // Busca na metade direita
+        } else {
+            fim = meio - 1; // Busca na metade esquerda
+        }
+    }
+    
+    return -1; // Elemento não encontrado
+}</pre>
+            </div>
+
+            <h3>2. Algoritmo de Ordenação Bubble Sort</h3>
+            <p>Um algoritmo simples de ordenação que percorre a lista múltiplas vezes, comparando elementos adjacentes e trocando-os se estiverem na ordem errada.</p>
+            
+            <div class="code-block">
+                <pre>
+function bubbleSort(array) {
+    let n = array.length;
+    
+    for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                // Troca os elementos
+                let temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+            }
+        }
+    }
+    
+    return array;
+}</pre>
+            </div>
+
+            <h3>3. Algoritmo de Fibonacci</h3>
+            <p>Gera a sequência de Fibonacci, onde cada número é a soma dos dois anteriores: 0, 1, 1, 2, 3, 5, 8, 13, ...</p>
+            
+            <div class="code-block">
+                <pre>
+function fibonacci(n) {
+    if (n <= 1) return n;
+    
+    let a = 0, b = 1;
+    
+    for (let i = 2; i <= n; i++) {
+        let temp = a + b;
+        a = b;
+        b = temp;
+    }
+    
+    return b;
+}
+
+// Versão recursiva
+function fibonacciRecursivo(n) {
+    if (n <= 1) return n;
+    return fibonacciRecursivo(n - 1) + fibonacciRecursivo(n - 2);
+}</pre>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Importante:</strong> A versão recursiva do Fibonacci é ineficiente para valores grandes devido à repetição de cálculos. A versão iterativa é muito mais rápida!
+            </div>
+        </section>
+
+        <section id="estruturas">
+            <h2>Estruturas de Dados</h2>
+            
+            <div class="cards">
+                <div class="card">
+                    <h3>Listas/Arrays</h3>
+                    <p>Coleções ordenadas de elementos que podem ser acessados por índice. Ideais para armazenar sequências de dados.</p>
+                    <p><strong>Operações:</strong> inserir, remover, acessar, buscar</p>
+                </div>
+                <div class="card">
+                    <h3>Pilhas (Stack)</h3>
+                    <p>Estrutura LIFO (Last In, First Out) - o último elemento inserido é o primeiro a sair. Útil para desfazer operações, navegação em navegadores.</p>
+                </div>
+                <div class="card">
+                    <h3>Filas (Queue)</h3>
+                    <p>Estrutura FIFO (First In, First Out) - o primeiro elemento inserido é o primeiro a sair. Usado em sistemas de impressão, processamento de tarefas.</p>
+                </div>
+                <div class="card">
+                    <h3>Árvores</h3>
+                    <p>Estrutura hierárquica com nós e conexões. Árvores binárias são usadas em busca eficiente, expressões matemáticas.</p>
+                </div>
+                <div class="card">
+                    <h3>Grafos</h3>
+                    <p>Conjunto de vértices conectados por arestas. Modelam redes sociais, mapas de rotas, sistemas de recomendação.</p>
+                </div>
+                <div class="card">
+                    <h3>Tabelas Hash</h3>
+                    <p>Estrutura que mapeia chaves a valores para acesso rápido. Usado em bancos de dados, caches, dicionários.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursos">
+            <h2>Recursos de Aprendizado</h2>
+            
+            <h3>Linguagens Recomendadas para Iniciantes</h3>
+            <ul style="margin-left: 20px; margin-bottom: 20px;">
+                <li><strong>Python</strong> - Sintaxe simples, ótima para começar</li>
+                <li><strong>JavaScript</strong> - Perfeito para desenvolvimento web</li>
+                <li><strong>Java</strong> - Amplamente usado em empresas</li>
+                <li><strong>C</strong> - Conhecimento profundo de computação</li>
+            </ul>
+
+            <h3>Plataformas para Praticar</h3>
+            <div class="cards">
+                <div class="card">
+                    <h3>LeetCode</h3>
+                    <p>Milhares de problemas para praticar algoritmos e se preparar para entrevistas técnicas.</p>
+                </div>
+                <div class="card">
+                    <h3>HackerRank</h3>
+                    <p>Desafios de programação em várias linguagens, com competições e rankings.</p>
+                </div>
+                <div class="card">
+                    <h3>CodeWars</h3>
+                    <p>Desafios de código (kata) para melhorar suas habilidades em diversas linguagens.</p>
+                </div>
+            </div>
+
+            <div class="tip" style="margin-top: 30px;">
+                <strong>📚 Dica de estudo:</strong> Comece com problemas simples e gradualmente aumente a dificuldade. Pratique pelo menos 30 minutos por dia e participe de comunidades de programação para trocar conhecimentos.
+            </div>
+        </section>
+
+        <footer>
+            <p>Programação e Algoritmos - Aprenda, pratique e evolua!</p>
+            <p>Desenvolvido com ❤️ para estudantes de computação</p>
+            <p>&copy; 2024 PA - Todos os direitos reservados</p>
+        </footer>
+    </div>
+</body>
+</html>
