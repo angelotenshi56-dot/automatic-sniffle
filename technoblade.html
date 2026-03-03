@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technoblade · Lenda do Minecraft</title>
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Montserrat + Minecraft (pixelada) para detalhes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0b0c10;
+      font-family: 'Montserrat', sans-serif;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    /* textura sutil de terra do minecraft (simulada) */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        radial-gradient(rgba(70, 40, 20, 0.15) 2px, transparent 2px),
+        radial-gradient(rgba(100, 60, 30, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px, 80px 80px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* cabeçalho principal */
+    .hero {
+      text-align: center;
+      padding: 2rem 0 1rem 0;
+      border-bottom: 3px solid #b13e3e;
+      margin-bottom: 2.5rem;
+    }
+
+    .pig-icon {
+      font-size: 6rem;
+      filter: drop-shadow(0 0 15px #b13e3e);
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+    .pig-icon:hover {
+      transform: rotate(5deg) scale(1.05);
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2rem;
+      color: #f5f5f5;
+      text-shadow: 4px 4px 0 #7a2f2f, 6px 6px 0 #000;
+      margin: 0.5rem 0 0.2rem;
+      word-break: break-word;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #c5c5c5;
+      letter-spacing: 1px;
+    }
+    .subtitle i {
+      color: #b13e3e;
+      margin: 0 5px;
+    }
+
+    /* seções gerais */
+    section {
+      background: rgba(20, 15, 10, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 30px;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid #3a2a1e;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.7);
+    }
+
+    h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: #f0b0b0;
+      border-left: 8px solid #b13e3e;
+      padding-left: 1rem;
+      text-transform: uppercase;
+    }
+
+    h2 i {
+      margin-right: 10px;
+      color: #b13e3e;
+    }
+
+    /* biografia */
+    .bio p {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      text-align: justify;
+    }
+
+    .bio strong {
+      color: #ff9f9f;
+      font-weight: 700;
+    }
+
+    .highlight {
+      background: #2e1c14;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      display: inline-block;
+      font-weight: bold;
+      border: 1px solid #b13e3e;
+      margin-top: 0.5rem;
+    }
+
+    /* cards de conquistas */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .card {
+      background: #1f1712;
+      padding: 1.8rem 1rem;
+      border-radius: 25px;
+      text-align: center;
+      border: 2px solid #4f3327;
+      transition: all 0.2s;
+      box-shadow: 0 8px 0 #2a1d16;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #b13e3e;
+      box-shadow: 0 13px 0 #2a1d16;
+    }
+
+    .card i {
+      font-size: 3rem;
+      color: #d45a5a;
+      margin-bottom: 0.8rem;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: #fadfaf;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+
+    /* lista de citações */
+    .quotes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .quote-item {
+      background: #241c16;
+      padding: 1.2rem 1.8rem;
+      border-radius: 50px;
+      font-size: 1.3rem;
+      font-weight: 500;
+      border-left: 10px solid #b13e3e;
+      box-shadow: 0 4px 0 #3f2c21;
+      transition: 0.1s;
+    }
+
+    .quote-item:hover {
+      background: #2f241e;
+    }
+
+    .quote-item i {
+      color: #b13e3e;
+      margin-right: 15px;
+      font-size: 1.6rem;
+      vertical-align: middle;
+    }
+
+    .quote-item span {
+      font-style: italic;
+    }
+
+    .quote-author {
+      display: block;
+      margin-top: 8px;
+      font-size: 1rem;
+      color: #a8816e;
+      margin-left: 50px;
+    }
+
+    /* legado / memoria */
+    .legacy-box {
+      background: #1e1510;
+      border-radius: 50px;
+      padding: 2rem;
+      text-align: center;
+      border: 2px dashed #b13e3e;
+    }
+
+    .legacy-box p {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .legacy-box .dates {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      color: #f5b9b9;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .legacy-box .frase-final {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #ffe2b0;
+      text-shadow: 3px 3px 0 #6b2e2e;
+    }
+
+    /* botão youtube */
+    .youtube-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #b13e3e;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.3rem;
+      padding: 1rem 2.8rem;
+      border-radius: 60px;
+      margin: 2rem auto 1rem;
+      border: 2px solid #f0c0a0;
+      transition: 0.15s;
+      box-shadow: 0 9px 0 #641e1e;
+    }
+
+    .youtube-btn:hover {
+      background: #c44a4a;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 0 #641e1e;
+    }
+
+    .youtube-btn i {
+      font-size: 2rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0 0.5rem;
+      color: #6b5b4e;
+      font-size: 1rem;
+    }
+
+    /* responsividade extra */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; text-shadow: 3px 3px 0 #7a2f2f; }
+      .pig-icon { font-size: 4rem; }
+      .subtitle { font-size: 1rem; }
+      h2 { font-size: 1.2rem; }
+      .quote-item { font-size: 1rem; padding: 1rem; }
+      .legacy-box p { font-size: 1.1rem; }
+      .legacy-box .frase-final { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="pig-icon">🐷⚔️</div>
+      <h1>TECHNOBLADE</h1>
+      <div class="subtitle">
+        <i class="fas fa-crown"></i> A LENDA DO MINECRAFT <i class="fas fa-crown"></i>
+      </div>
+    </div>
+
+    <!-- BIOGRAFIA -->
+    <section class="bio">
+      <h2><i class="fas fa-book-open"></i> QUEM FOI</h2>
+      <p><strong>Technoblade</strong> (nascido Alexander, 1999 – 2022) foi um dos jogadores de Minecraft mais icônicos de todos os tempos. Ficou famoso pelo seu incrível talento em PvP, inteligência nos jogos e personalidade sarcástica — sempre usando uma máscara de porco e se autointitulando “o melhor jogador de Minecraft do mundo”.</p>
+      <p>Seu canal no YouTube conquistou mais de <strong>15 milhões de inscritos</strong> com séries lendárias como <em>Potato War</em>, <em>Minecraft Monday</em> e <em>Dream SMP</em>. Seu bordão “Technoblade never dies” se tornou um hino entre os fãs.</p>
+      <span class="highlight"><i class="fas fa-sword"></i> "Officer, I dropkicked that child in self-defense."</span>
+    </section>
+
+    <!-- CONQUISTAS -->
+    <section>
+      <h2><i class="fas fa-trophy"></i> CONQUISTAS ÉPICAS</h2>
+      <div class="achievements-grid">
+        <div class="card">
+          <i class="fas fa-calendar-check"></i>
+          <h3>Minecraft Monday</h3>
+          <p>3x vencedor (ao lado de nomes como xQc e M0xy)</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-seedling"></i>
+          <h3>Potato War</h3>
+          <p>Maior fazenda de batatas do servidor – 30 milhões de batatas</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-users"></i>
+          <h3>10+ milhões</h3>
+          <p>Inscritos no YouTube antes de sua partida</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-gamepad"></i>
+          <h3>Dream SMP</h3>
+          <p>Arcos memoráveis, rivalidade com Dream e TommyInnit</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-piggy-bank"></i>
+          <h3>The Blade</h3>
+          <p>Campeão do torneio "MCC" diversas vezes</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-skull"></i>
+          <h3>Technoblade Never Dies</h3>
+          <p>Lenda imortal no coração dos fãs</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CITAÇÕES FAMOSAS -->
+    <section>
+      <h2><i class="fas fa-quote-right"></i> CITAÇÕES INESQUECÍVEIS</h2>
+      <div class="quotes-list">
+        <div class="quote-item">
+          <i class="fas fa-quote-left"></i> <span>"Technoblade never dies."</span>
+          <span class="quote-author">— ele mesmo, em quase todo vídeo</span>
+        </div>
+        <div class="quote-item">
+          <i class="fas fa-quote-left"></i> <span>"Officer, I dropkicked that child in self-defense."</span>
+          <span class="quote-author">— Technoblade, explicando o inexplicável</span>
+        </div>
+        <div class="quote-item">
+          <i class="fas fa-quote-left"></i> <span>"I have a need, a need for speed."</span>
+          <span class="quote-author">— referência a Top Gun, mas no Minecraft</span>
+        </div>
+        <div class="quote-item">
+          <i class="fas fa-quote-left"></i> <span>"If you want to win, you have to be willing to sacrifice everything."</span>
+          <span class="quote-author">— durante a Potato War</span>
+        </div>
+        <div class="quote-item">
+          <i class="fas fa-quote-left"></i> <span>"When life gives you melons, you're dyslexic."</span>
+          <span class="quote-author">— piada clássica no stream</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMORIAL / LEGADO -->
+    <section>
+      <h2><i class="fas fa-heart"></i> LEGADO</h2>
+      <div class="legacy-box">
+        <p>💔 Em 30 de junho de 2022, Technoblade faleceu após uma batalha contra o sarcoma. Sua família compartilhou uma mensagem emocionante no canal, intitulada <strong>"so long, nerds"</strong>.</p>
+        <div class="dates">🍂 1999  —  2022 🕊️</div>
+        <p class="frase-final">TECHNOBLADE NUNCA MORRE</p>
+        <p>Ele pode ter ido lutar em outro reino, mas sua espada e seu humor continuam vivos em cada fã que constrói, luta e ri no Minecraft.</p>
+        <a href="https://www.youtube.com/@Technoblade" target="_blank" class="youtube-btn">
+          <i class="fab fa-youtube"></i>  SEU CANAL
+        </a>
+        <p style="margin-top: 1.5rem;"><i class="fas fa-crown" style="color: gold;"></i> #TechnobladeNeverDies <i class="fas fa-crown" style="color: gold;"></i></p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>✧ página dedicada ao porco mais temido do minecraft ✧</p>
+      <p>feito por fã · 2025 · em memória de Alexander ★</p>
+      <p><i class="fas fa-sword"></i> <i class="fas fa-piggy-bank"></i> <i class="fas fa-sword"></i></p>
+    </footer>
+  </div>
+</body>
+</html>
