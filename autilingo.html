@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutiLingo - Para PC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Container principal - estilo janela de app */
+        .app-window {
+            width: 1300px;
+            height: 800px;
+            background: #f5f5f5;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: appEnter 0.5s ease;
+        }
+
+        @keyframes appEnter {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Barra de título estilo Windows */
+        .title-bar {
+            background: #2d3436;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            -webkit-app-region: drag;
+        }
+
+        .title-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title-bar-left span {
+            font-size: 20px;
+        }
+
+        .title-bar-left h2 {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 15px;
+            -webkit-app-region: no-drag;
+        }
+
+        .window-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .window-controls button:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .close-btn:hover {
+            background: #e74c3c !important;
+        }
+
+        /* Conteúdo principal */
+        .app-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Barra lateral */
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-info {
+            padding: 25px 20px;
+            background: linear-gradient(135deg, #6C5CE7, #a8e6cf);
+            color: white;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: #f0f0f0;
+        }
+
+        .nav-item.active {
+            background: #f0f2fe;
+            border-left-color: #6C5CE7;
+            color: #6C5CE7;
+        }
+
+        .nav-item span {
+            font-size: 20px;
+        }
+
+        /* Área principal */
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        /* Header da main */
+        .main-header {
+            padding: 20px 30px;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .header-title p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-btn {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .header-btn:hover {
+            background: #e0e0e0;
+        }
+
+        /* Scrollable content */
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        /* Cards de estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: #f0f2fe;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+
+        .stat-info h3 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: #666;
+        }
+
+        /* Grade de lições */
+        .section-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.2);
+        }
+
+        .lesson-card.completed {
+            opacity: 0.8;
+            background: #f0f0f0;
+        }
+
+        .lesson-emoji {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .lesson-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .lesson-level {
+            display: inline-block;
+            padding: 5px 12px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Modal de exercício */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 30px;
+            width: 600px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalEnter 0.3s ease;
+        }
+
+        @keyframes modalEnter {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            padding: 25px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: #333;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        /* Exercício */
+        .exercise-emoji {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .exercise-emoji span {
+            font-size: 100px;
+            background: #f0f2fe;
+            width: 150px;
+            height: 150px;
+            border-radius: 75px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .exercise-question {
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .exercise-hint {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffb347;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .option-btn {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option-btn:hover {
+            border-color: #6C5CE7;
+            background: #f0f2fe;
+        }
+
+        /* Feedback */
+        .feedback {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1100;
+        }
+
+        .feedback.active {
+            display: block;
+            animation: feedbackEnter 0.3s ease;
+        }
+
+        @keyframes feedbackEnter {
+            from { opacity: 0; transform: translate(-50%, -30%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .feedback.correct {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .feedback.incorrect {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .feedback span {
+            font-size: 80px;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .feedback p {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* Responsividade */
+        @media (max-width: 1000px) {
+            .app-window {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .lessons-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-window" id="app">
+        <!-- Barra de título -->
+        <div class="title-bar">
+            <div class="title-bar-left">
+                <span>🧩</span>
+                <h2>AutiLingo - Aprendizagem para Autistas</h2>
+            </div>
+            <div class="window-controls">
+                <button onclick="window.electronAPI?.minimize()">─</button>
+                <button onclick="window.electronAPI?.maximize()">□</button>
+                <button class="close-btn" onclick="window.electronAPI?.close()">×</button>
+            </div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="app-content" id="appContent">
+            <!-- Será preenchido pelo JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal de exercício -->
+    <div class="modal" id="exerciseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Expressões Faciais</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Conteúdo do exercício -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="feedback" id="feedback">
+        <span id="feedbackEmoji">✅</span>
+        <p id="feedbackText">Muito bem!</p>
+    </div>
+
+    <script>
+        // ============================================
+        // BANCO DE DADOS LOCAL
+        // ============================================
+        const Database = {
+            users: [],
+            lessons: [
+                {
+                    id: '1',
+                    title: 'Expressões Faciais',
+                    emoji: '😊',
+                    color: '#FF6B6B',
+                    level: 'Iniciante',
+                    category: 'social',
+                    completed: false,
+                    exercises: [
+                        {
+                            question: 'Como esta pessoa está se sentindo?',
+                            image: '😊',
+                            options: ['Feliz', 'Triste', 'Bravo', 'Cansado'],
+                            correct: 0,
+                            hint: 'Observe o sorriso no rosto'
+                        },
+                        {
+                            question: 'O que significa esta expressão?',
+                            image: '😢',
+                            options: ['Alegria', 'Tristeza', 'Raiva', 'Medo'],
+                            correct: 1,
+                            hint: 'As lágrimas mostram que alguém está triste'
+                        },
+                        {
+                            question: 'Qual emoção esta pessoa está sentindo?',
+                            image: '😠',
+                            options: ['Feliz', 'Triste', 'Com raiva', 'Surpreso'],
+                            correct: 2,
+                            hint: 'Sobrancelhas franzidas significam raiva'
+                        }
+                    ]
+                },
+                {
+                    id: '2',
+                    title: 'Rotina Diária',
+                    emoji: '⏰',
+                    color: '#4ECDC4',
+                    level: 'Intermediário',
+                    category: 'routine',
+                    completed: false,
+                    exercises: [
+                        {
+                            question: 'O que fazer primeiro ao acordar?',
+                            image: '🛏️',
+                            options: ['Escovar dentes', 'Tomar café', 'Vestir roupa', 'Acordar'],
+                            correct: 3,
+                            hint: 'Antes de tudo, você precisa acordar'
+                        },
+                        {
+                            question: 'Depois de escovar os dentes, o que fazer?',
+                            image: '🍳',
+                            options: ['Tomar café', 'Dormir de novo', 'Sair correndo', 'Nadar'],
+                            correct: 0,
+                            hint: 'Hora de se alimentar'
+                        }
+                    ]
+                },
+                {
+                    id: '3',
+                    title: 'Saudações',
+                    emoji: '👋',
+                    color: '#FFE66D',
+                    level: 'Iniciante',
+                    category: 'social',
+                    completed: false,
+                    exercises: [
+                        {
+                            question: 'O que dizer quando encontra alguém?',
+                            image: '👋',
+                            options: ['Oi! Tudo bem?', 'Ficar quieto', 'Sair correndo', 'Olhar para baixo'],
+                            correct: 0,
+                            hint: 'É educado cumprimentar as pessoas'
+                        },
+                        {
+                            question: 'Como responder a "Como você está?"',
+                            image: '💬',
+                            options: ['"Estou bem, e você?"', 'Ignorar', 'Chorar', 'Gritar'],
+                            correct: 0,
+                            hint: 'É legal responder e perguntar de volta'
+                        }
+                    ]
+                },
+                {
+                    id: '4',
+                    title: 'Sons e Sensibilidades',
+                    emoji: '🔊',
+                    color: '#A8E6CF',
+                    level: 'Avançado',
+                    category: 'sensory',
+                    completed: false,
+                    exercises: [
+                        {
+                            question: 'Qual som pode ser muito alto e incômodo?',
+                            image: '🎆',
+                            options: ['Pássaros cantando', 'Fogos de artifício', 'Chuva', 'Música suave'],
+                            correct: 1,
+                            hint: 'Alguns barulhos podem machucar os ouvidos'
+                        },
+                        {
+                            question: 'O que fazer quando um som está incomodando?',
+                            image: '🙉',
+                            options: ['Tampar os ouvidos', 'Gritar', 'Quebrar coisas', 'Ignorar'],
+                            correct: 0,
+                            hint: 'Proteger os ouvidos ajuda'
+                        }
+                    ]
+                },
+                {
+                    id: '5',
+                    title: 'Sentimentos',
+                    emoji: '💭',
+                    color: '#FFB347',
+                    level: 'Intermediário',
+                    category: 'emotions',
+                    completed: false,
+                    exercises: [
+                        {
+                            question: 'Quando você está animado, você...',
+                            image: '🎉',
+                            options: ['Sorri e pula', 'Chora', 'Dorme', 'Fica parado'],
+                            correct: 0,
+                            hint: 'A animação nos faz querer comemorar'
+                        },
+                        {
+                            question: 'O que fazer quando está triste?',
+                            image: '😔',
+                            options: ['Conversar com alguém', 'Bater', 'Gritar', 'Se esconder'],
+                            correct: 0,
+                            hint: 'Conversar ajuda a se sentir melhor'
+                        }
+                    ]
+                }
+            ],
+            progress: [],
+            currentUser: null,
+            currentLesson: null,
+            currentExercise: 0,
+            score: 0,
+
+            // Salvar no localStorage
+            save() {
+                localStorage.setItem('autilingo_data', JSON.stringify({
+                    users: this.users,
+                    progress: this.progress,
+                    currentUser: this.currentUser
+                }));
+            },
+
+            // Carregar do localStorage
+            load() {
+                const data = localStorage.getItem('autilingo_data');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    this.users = parsed.users || [];
+                    this.progress = parsed.progress || [];
+                    this.currentUser = parsed.currentUser || null;
+                }
+            },
+
+            // Usuários
+            findUserByEmail(email) {
+                return this.users.find(u => u.email === email);
+            },
+
+            createUser(userData) {
+                const newUser = {
+                    id: String(this.users.length + 1),
+                    ...userData,
+                    level: 1,
+                    xp: 0,
+                    streak: 0,
+                    createdAt: new Date().toISOString()
+                };
+                this.users.push(newUser);
+                this.save();
+                return newUser;
+            },
+
+            // Progresso
+            updateProgress(userId, lessonId, completed, score) {
+                const existing = this.progress.find(p => p.userId === userId && p.lessonId === lessonId);
+                if (existing) {
+                    existing.completed = completed;
+                    existing.score = score;
+                    existing.lastAccessed = new Date().toISOString();
+                } else {
+                    this.progress.push({
+                        userId,
+                        lessonId,
+                        completed,
+                        score,
+                        lastAccessed: new Date().toISOString()
+                    });
+                }
+
+                // Atualizar XP do usuário
+                const user = this.users.find(u => u.id === userId);
+                if (user && completed) {
+                    user.xp += 50;
+                    user.level = Math.floor(user.xp / 100) + 1;
+                }
+
+                // Marcar lição como completa
+                const lesson = this.lessons.find(l => l.id === lessonId);
+                if (lesson) {
+                    lesson.completed = completed;
+                }
+
+                this.save();
+                return user;
+            },
+
+            getUserProgress(userId) {
+                return this.progress.filter(p => p.userId === userId);
+            }
+        };
+
+        // Carregar dados salvos
+        Database.load();
+
+        // ============================================
+        // INTERFACE DO USUÁRIO
+        // ============================================
+        const App = {
+            // Mostrar tela de login
+            showLogin() {
+                const content = document.getElementById('appContent');
+                content.innerHTML = `
+                    <div class="login-container" style="flex:1; display:flex; justify-content:center; align-items:center; background:linear-gradient(135deg, #6C5CE7, #a8e6cf);">
+                        <div class="login-box" style="background:white; border-radius:30px; padding:50px; width:400px;">
+                            <div class="login-logo" style="text-align:center; margin-bottom:30px;">
+                                <span style="font-size:80px;">🧩</span>
+                                <h1 style="color:#6C5CE7; margin:10px 0;">AutiLingo</h1>
+                                <p style="color:#666;">Aprenda no seu ritmo</p>
+                            </div>
+                            
+                            <div style="margin-bottom:20px;">
+                                <input type="email" id="loginEmail" placeholder="Seu email" 
+                                       style="width:100%; padding:15px; border:2px solid #e0e0e0; border-radius:15px; font-size:16px;">
+                            </div>
+                            
+                            <div style="margin-bottom:30px;">
+                                <input type="password" id="loginPassword" placeholder="Sua senha" 
+                                       style="width:100%; padding:15px; border:2px solid #e0e0e0; border-radius:15px; font-size:16px;">
+                            </div>
+                            
+                            <button onclick="App.handleLogin()" 
+                                    style="width:100%; padding:15px; background:#6C5CE7; color:white; border:none; border-radius:15px; font-size:18px; font-weight:600; cursor:pointer; margin-bottom:15px;">
+                                Entrar
+                            </button>
+                            
+                            <button onclick="App.showRegister()" 
+                                    style="width:100%; padding:15px; background:#f0f0f0; color:#333; border:none; border-radius:15px; font-size:16px; cursor:pointer;">
+                                Criar nova conta
+                            </button>
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Mostrar tela de registro
+            showRegister() {
+                const content = document.getElementById('appContent');
+                content.innerHTML = `
+                    <div class="login-container" style="flex:1; display:flex; justify-content:center; align-items:center; background:linear-gradient(135deg, #6C5CE7, #a8e6cf);">
+                        <div class="login-box" style="background:white; border-radius:30px; padding:50px; width:400px;">
+                            <div class="login-logo" style="text-align:center; margin-bottom:30px;">
+                                <span style="font-size:80px;">🌟</span>
+                                <h1 style="color:#6C5CE7; margin:10px 0;">Criar Conta</h1>
+                                <p style="color:#666;">Comece sua jornada</p>
+                            </div>
+                            
+                            <div style="margin-bottom:20px;">
+                                <input type="text" id="regName" placeholder="Seu nome" 
+                                       style="width:100%; padding:15px; border:2px solid #e0e0e0; border-radius:15px; font-size:16px;">
+                            </div>
+                            
+                            <div style="margin-bottom:20px;">
+                                <input type="email" id="regEmail" placeholder="Seu email" 
+                                       style="width:100%; padding:15px; border:2px solid #e0e0e0; border-radius:15px; font-size:16px;">
+                            </div>
+                            
+                            <div style="margin-bottom:30px;">
+                                <input type="password" id="regPassword" placeholder="Sua senha" 
+                                       style="width:100%; padding:15px; border:2px solid #e0e0e0; border-radius:15px; font-size:16px;">
+                            </div>
+                            
+                            <button onclick="App.handleRegister()" 
+                                    style="width:100%; padding:15px; background:#6C5CE7; color:white; border:none; border-radius:15px; font-size:18px; font-weight:600; cursor:pointer; margin-bottom:15px;">
+                                Cadastrar
+                            </button>
+                            
+                            <button onclick="App.showLogin()" 
+                                    style="width:100%; padding:15px; background:#f0f0f0; color:#333; border:none; border-radius:15px; font-size:16px; cursor:pointer;">
+                                Voltar para login
+                            </button>
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Login
+            handleLogin() {
+                const email = document.getElementById('loginEmail')?.value;
+                const password = document.getElementById('loginPassword')?.value;
+
+                if (!email || !password) {
+                    alert('Preencha todos os campos');
+                    return;
+                }
+
+                const user = Database.findUserByEmail(email);
+                if (user && user.password === password) {
+                    Database.currentUser = user;
+                    Database.save();
+                    this.showMainApp();
+                } else {
+                    alert('Email ou senha inválidos');
+                }
+            },
+
+            // Registro
+            handleRegister() {
+                const name = document.getElementById('regName')?.value;
+                const email = document.getElementById('regEmail')?.value;
+                const password = document.getElementById('regPassword')?.value;
+
+                if (!name || !email || !password) {
+                    alert('Preencha todos os campos');
+                    return;
+                }
+
+                const existing = Database.findUserByEmail(email);
+                if (existing) {
+                    alert('Email já cadastrado');
+                    return;
+                }
+
+                const newUser = Database.createUser({ name, email, password });
+                Database.currentUser = newUser;
+                Database.save();
+                this.showMainApp();
+            },
+
+            // Logout
+            logout() {
+                Database.currentUser = null;
+                Database.save();
+                this.showLogin();
+            },
+
+            // Mostrar app principal
+            showMainApp() {
+                const user = Database.currentUser;
+                const content = document.getElementById('appContent');
+                
+                content.innerHTML = `
+                    <!-- Barra lateral -->
+                    <div class="sidebar">
+                        <div class="user-info">
+                            <div class="user-avatar">${user?.name?.charAt(0) || '👤'}</div>
+                            <div class="user-name">${user?.name || 'Usuário'}</div>
+                            <div class="user-stats">
+                                <span>⭐ Nível ${user?.level || 1}</span>
+                                <span>✨ ${user?.xp || 0} XP</span>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-menu">
+                            <div class="nav-item active" onclick="App.showMainApp()">
+                                <span>🏠</span>
+                                <span>Início</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showLessons()">
+                                <span>📚</span>
+                                <span>Lições</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showProgress()">
+                                <span>📊</span>
+                                <span>Meu Progresso</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showSettings()">
+                                <span>⚙️</span>
+                                <span>Configurações</span>
+                            </div>
+                            <div class="nav-item" onclick="App.logout()">
+                                <span>🚪</span>
+                                <span>Sair</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área principal -->
+                    <div class="main-area">
+                        <div class="main-header">
+                            <div class="header-title">
+                                <h1>Olá, ${user?.name}!</h1>
+                                <p>Continue aprendendo no seu ritmo</p>
+                            </div>
+                            <div class="header-actions">
+                                <button class="header-btn" onclick="App.showLessons()">
+                                    <span>📚</span>
+                                    <span>Ver todas as lições</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="content-scroll">
+                            <!-- Estatísticas -->
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-icon">⭐</div>
+                                    <div class="stat-info">
+                                        <h3>${user?.level || 1}</h3>
+                                        <p>Nível atual</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">✨</div>
+                                    <div class="stat-info">
+                                        <h3>${user?.xp || 0}</h3>
+                                        <p>XP total</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">🔥</div>
+                                    <div class="stat-info">
+                                        <h3>${user?.streak || 0}</h3>
+                                        <p>dias seguidos</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lições em destaque -->
+                            <div class="section-title">
+                                <span>📚</span>
+                                <h2>Continue aprendendo</h2>
+                            </div>
+
+                            <div class="lessons-grid" id="lessonsGrid">
+                                ${Database.lessons.map(lesson => `
+                                    <div class="lesson-card ${lesson.completed ? 'completed' : ''}" 
+                                         onclick="App.openLesson('${lesson.id}')"
+                                         style="background: ${lesson.color}20;">
+                                        <div class="lesson-emoji">${lesson.emoji}</div>
+                                        <div class="lesson-title">${lesson.title}</div>
+                                        <span class="lesson-level">${lesson.level}</span>
+                                        ${lesson.completed ? '<span style="margin-left:10px;">✅</span>' : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Dica do dia -->
+                            <div style="background:white; border-radius:20px; padding:25px; margin-top:30px; display:flex; align-items:center; gap:20px;">
+                                <span style="font-size:40px;">💡</span>
+                                <div>
+                                    <h3 style="color:#333; margin-bottom:5px;">Dica do dia</h3>
+                                    <p style="color:#666;">Respire fundo 3 vezes quando sentir ansiedade. Isso ajuda a se acalmar.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Mostrar todas as lições
+            showLessons() {
+                const content = document.getElementById('appContent');
+                const user = Database.currentUser;
+                
+                content.innerHTML = `
+                    <!-- Barra lateral -->
+                    <div class="sidebar">
+                        <div class="user-info">
+                            <div class="user-avatar">${user?.name?.charAt(0) || '👤'}</div>
+                            <div class="user-name">${user?.name || 'Usuário'}</div>
+                            <div class="user-stats">
+                                <span>⭐ Nível ${user?.level || 1}</span>
+                                <span>✨ ${user?.xp || 0} XP</span>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-menu">
+                            <div class="nav-item" onclick="App.showMainApp()">
+                                <span>🏠</span>
+                                <span>Início</span>
+                            </div>
+                            <div class="nav-item active" onclick="App.showLessons()">
+                                <span>📚</span>
+                                <span>Lições</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showProgress()">
+                                <span>📊</span>
+                                <span>Meu Progresso</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showSettings()">
+                                <span>⚙️</span>
+                                <span>Configurações</span>
+                            </div>
+                            <div class="nav-item" onclick="App.logout()">
+                                <span>🚪</span>
+                                <span>Sair</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área principal -->
+                    <div class="main-area">
+                        <div class="main-header">
+                            <div class="header-title">
+                                <h1>Todas as Lições</h1>
+                                <p>Escolha uma lição para começar</p>
+                            </div>
+                        </div>
+
+                        <div class="content-scroll">
+                            <div class="lessons-grid" style="grid-template-columns: repeat(2, 1fr);">
+                                ${Database.lessons.map(lesson => `
+                                    <div class="lesson-card ${lesson.completed ? 'completed' : ''}" 
+                                         onclick="App.openLesson('${lesson.id}')"
+                                         style="background: ${lesson.color}20; display:flex; flex-direction:row; align-items:center; gap:20px;">
+                                        <div class="lesson-emoji" style="font-size:40px; margin:0;">${lesson.emoji}</div>
+                                        <div style="flex:1;">
+                                            <div class="lesson-title">${lesson.title}</div>
+                                            <span class="lesson-level">${lesson.level}</span>
+                                            ${lesson.completed ? '<span style="margin-left:10px;">✅ Concluída</span>' : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Mostrar progresso
+            showProgress() {
+                const content = document.getElementById('appContent');
+                const user = Database.currentUser;
+                const progress = Database.getUserProgress(user.id);
+                const completedCount = progress.filter(p => p.completed).length;
+                const totalLessons = Database.lessons.length;
+                const percent = Math.round((completedCount / totalLessons) * 100);
+
+                content.innerHTML = `
+                    <!-- Barra lateral -->
+                    <div class="sidebar">
+                        <div class="user-info">
+                            <div class="user-avatar">${user?.name?.charAt(0) || '👤'}</div>
+                            <div class="user-name">${user?.name || 'Usuário'}</div>
+                            <div class="user-stats">
+                                <span>⭐ Nível ${user?.level || 1}</span>
+                                <span>✨ ${user?.xp || 0} XP</span>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-menu">
+                            <div class="nav-item" onclick="App.showMainApp()">
+                                <span>🏠</span>
+                                <span>Início</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showLessons()">
+                                <span>📚</span>
+                                <span>Lições</span>
+                            </div>
+                            <div class="nav-item active" onclick="App.showProgress()">
+                                <span>📊</span>
+                                <span>Meu Progresso</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showSettings()">
+                                <span>⚙️</span>
+                                <span>Configurações</span>
+                            </div>
+                            <div class="nav-item" onclick="App.logout()">
+                                <span>🚪</span>
+                                <span>Sair</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área principal -->
+                    <div class="main-area">
+                        <div class="main-header">
+                            <div class="header-title">
+                                <h1>Meu Progresso</h1>
+                                <p>Acompanhe sua evolução</p>
+                            </div>
+                        </div>
+
+                        <div class="content-scroll">
+                            <!-- Progresso geral -->
+                            <div style="background:white; border-radius:20px; padding:30px; margin-bottom:30px;">
+                                <h2 style="color:#333; margin-bottom:20px;">Progresso geral</h2>
+                                <div style="height:20px; background:#f0f0f0; border-radius:10px; overflow:hidden; margin-bottom:15px;">
+                                    <div style="height:100%; width:${percent}%; background:#6C5CE7;"></div>
+                                </div>
+                                <p style="color:#666;">${completedCount} de ${totalLessons} lições concluídas (${percent}%)</p>
+                            </div>
+
+                            <!-- Estatísticas detalhadas -->
+                            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:30px;">
+                                <div style="background:white; border-radius:20px; padding:25px; text-align:center;">
+                                    <span style="font-size:40px;">⭐</span>
+                                    <h3 style="font-size:36px; color:#333; margin:10px 0;">${user.level}</h3>
+                                    <p style="color:#666;">Nível atual</p>
+                                </div>
+                                <div style="background:white; border-radius:20px; padding:25px; text-align:center;">
+                                    <span style="font-size:40px;">✨</span>
+                                    <h3 style="font-size:36px; color:#333; margin:10px 0;">${user.xp}</h3>
+                                    <p style="color:#666;">XP total</p>
+                                </div>
+                                <div style="background:white; border-radius:20px; padding:25px; text-align:center;">
+                                    <span style="font-size:40px;">🔥</span>
+                                    <h3 style="font-size:36px; color:#333; margin:10px 0;">${user.streak}</h3>
+                                    <p style="color:#666;">Dias seguidos</p>
+                                </div>
+                            </div>
+
+                            <!-- Lições concluídas -->
+                            <h2 style="color:#333; margin-bottom:20px;">Últimas atividades</h2>
+                            ${progress.filter(p => p.completed).map(p => {
+                                const lesson = Database.lessons.find(l => l.id === p.lessonId);
+                                return `
+                                    <div style="background:white; border-radius:15px; padding:20px; margin-bottom:15px; display:flex; align-items:center; gap:20px;">
+                                        <span style="font-size:30px;">${lesson?.emoji || '📚'}</span>
+                                        <div style="flex:1;">
+                                            <h3 style="color:#333;">${lesson?.title || 'Lição'}</h3>
+                                            <p style="color:#666;">Concluída em ${new Date(p.lastAccessed).toLocaleDateString()}</p>
+                                        </div>
+                                        <span style="background:#4CAF50; color:white; padding:5px 15px; border-radius:20px;">${p.score} pts</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Configurações
+            showSettings() {
+                const content = document.getElementById('appContent');
+                const user = Database.currentUser;
+
+                content.innerHTML = `
+                    <!-- Barra lateral -->
+                    <div class="sidebar">
+                        <div class="user-info">
+                            <div class="user-avatar">${user?.name?.charAt(0) || '👤'}</div>
+                            <div class="user-name">${user?.name || 'Usuário'}</div>
+                            <div class="user-stats">
+                                <span>⭐ Nível ${user?.level || 1}</span>
+                                <span>✨ ${user?.xp || 0} XP</span>
+                            </div>
+                        </div>
+                        
+                        <div class="nav-menu">
+                            <div class="nav-item" onclick="App.showMainApp()">
+                                <span>🏠</span>
+                                <span>Início</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showLessons()">
+                                <span>📚</span>
+                                <span>Lições</span>
+                            </div>
+                            <div class="nav-item" onclick="App.showProgress()">
+                                <span>📊</span>
+                                <span>Meu Progresso</span>
+                            </div>
+                            <div class="nav-item active" onclick="App.showSettings()">
+                                <span>⚙️</span>
+                                <span>Configurações</span>
+                            </div>
+                            <div class="nav-item" onclick="App.logout()">
+                                <span>🚪</span>
+                                <span>Sair</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área principal -->
+                    <div class="main-area">
+                        <div class="main-header">
+                            <div class="header-title">
+                                <h1>Configurações</h1>
+                                <p>Personalize sua experiência</p>
+                            </div>
+                        </div>
+
+                        <div class="content-scroll">
+                            <div style="background:white; border-radius:20px; padding:30px;">
+                                <h2 style="color:#333; margin-bottom:20px;">Acessibilidade</h2>
+                                
+                                <div style="margin-bottom:20px;">
+                                    <label style="display:flex; align-items:center; gap:15px; cursor:pointer;">
+                                        <input type="checkbox" id="highContrast" onchange="App.toggleSetting('highContrast')">
+                                        <span style="color:#333;">Alto contraste</span>
+                                    </label>
+                                </div>
+
+                                <div style="margin-bottom:20px;">
+                                    <label style="display:flex; align-items:center; gap:15px; cursor:pointer;">
+                                        <input type="checkbox" id="largeText" onchange="App.toggleSetting('largeText')">
+                                        <span style="color:#333;">Texto grande</span>
+                                    </label>
+                                </div>
+
+                                <div style="margin-bottom:20px;">
+                                    <label style="display:flex; align-items:center; gap:15px; cursor:pointer;">
+                                        <input type="checkbox" id="soundEffects" onchange="App.toggleSetting('soundEffects')" checked>
+                                        <span style="color:#333;">Efeitos sonoros</span>
+                                    </label>
+                                </div>
+
+                                <div style="margin-bottom:20px;">
+                                    <label style="display:flex; align-items:center; gap:15px; cursor:pointer;">
+                                        <input type="checkbox" id="vibration" onchange="App.toggleSetting('vibration')" checked>
+                                        <span style="color:#333;">Vibração</span>
+                                    </label>
+                                </div>
+
+                                <hr style="margin:30px 0; border:none; border-top:1px solid #e0e0e0;">
+
+                                <h2 style="color:#333; margin-bottom:20px;">Sobre</h2>
+                                <p style="color:#666; margin-bottom:10px;">AutiLingo v1.0.0</p>
+                                <p style="color:#666;">App educacional para autistas</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            // Abrir lição
+            openLesson(lessonId) {
+                const lesson = Database.lessons.find(l => l.id === lessonId);
+                if (!lesson) return;
+
+                Database.currentLesson = lesson;
+                Database.currentExercise = 0;
+                Database.score = 0;
+
+                document.getElementById('modalTitle').textContent = lesson.title;
+                this.showExercise();
+                document.getElementById('exerciseModal').classList.add('active');
+            },
+
+            // Mostrar exercício
+            showExercise() {
+                const lesson = Database.currentLesson;
+                const exercise = lesson.exercises[Database.currentExercise];
+                
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="exercise-emoji">
+                        <span>${exercise.image}</span>
+                    </div>
+                    <div class="exercise-question">${exercise.question}</div>
+                    <div class="exercise-hint">
+                        <span>💡</span>
+                        <span>${exercise.hint}</span>
+                    </div>
+                    <div class="options-grid">
+                        ${exercise.options.map((opt, idx) => `
+                            <button class="option-btn" onclick="App.checkAnswer(${idx})">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div style="text-align:center; margin-top:20px; color:#666;">
+                        Exercício ${Database.currentExercise + 1} de ${lesson.exercises.length}
+                    </div>
+                `;
+            },
+
+            // Verificar resposta
+            checkAnswer(selectedIndex) {
+                const lesson = Database.currentLesson;
+                const exercise = lesson.exercises[Database.currentExercise];
+                const isCorrect = selectedIndex === exercise.correct;
+
+                // Mostrar feedback
+                const feedback = document.getElementById('feedback');
+                const feedbackEmoji = document.getElementById('feedbackEmoji');
+                const feedbackText = document.getElementById('feedbackText');
+
+                if (isCorrect) {
+                    feedbackEmoji.textContent = '✅';
+                    feedbackText.textContent = 'Muito bem!';
+                    feedback.className = 'feedback active correct';
+                    Database.score += 10;
+                } else {
+                    feedbackEmoji.textContent = '❌';
+                    feedbackText.textContent = 'Tente novamente!';
+                    feedback.className = 'feedback active incorrect';
+                }
+
+                // Esconder feedback após 1.5s
+                setTimeout(() => {
+                    feedback.classList.remove('active');
+                    
+                    if (isCorrect) {
+                        // Avançar para próximo exercício
+                        if (Database.currentExercise < lesson.exercises.length - 1) {
+                            Database.currentExercise++;
+                            this.showExercise();
+                        } else {
+                            // Lição completa
+                            this.completeLesson();
+                        }
+                    }
+                }, 1500);
+            },
+
+            // Completar lição
+            completeLesson() {
+                const lesson = Database.currentLesson;
+                const user = Database.currentUser;
+
+                // Atualizar progresso
+                Database.updateProgress(user.id, lesson.id, true, Database.score);
+                
+                // Fechar modal
+                document.getElementById('exerciseModal').classList.remove('active');
+                
+                // Mostrar parabéns
+                alert(`🎉 Parabéns!\n\nVocê completou a lição "${lesson.title}"!\nGanhou 50 XP!\nPontuação: ${Database.score} pontos`);
+                
+                // Atualizar interface
+                this.showMainApp();
+            },
+
+            // Configurações
+            toggleSetting(setting) {
+                // Implementar configurações
+                console.log('Toggle setting:', setting);
+            }
+        };
+
+        // Inicializar
+        window.onload = () => {
+            if (Database.currentUser) {
+                App.showMainApp();
+            } else {
+                App.showLogin();
+            }
+        };
+
+        // Funções globais
+        window.App = App;
+        window.closeModal = () => {
+            document.getElementById('exerciseModal').classList.remove('active');
+        };
+
+        // Simular API do Electron
+        window.electronAPI = {
+            minimize: () => console.log('Minimizar'),
+            maximize: () => console.log('Maximizar'),
+            close: () => {
+                if (confirm('Deseja sair do AutiLingo?')) {
+                    window.close();
+                }
+            }
+        };
+    </script>
+</body>
+</html>
