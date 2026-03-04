@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Jump Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #87CEEB, #98D8E8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px 10px 0 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .score {
+            font-size: 24px;
+            background: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .game-board {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(to bottom, #87CEEB 70%, #8B4513 70%);
+            border: 3px solid #333;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .mario {
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+            width: 40px;
+            height: 50px;
+            background: #e63946;
+            border-radius: 10px 10px 0 0;
+            transition: bottom 0.3s;
+            z-index: 10;
+        }
+
+        .mario::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 5px;
+            width: 30px;
+            height: 20px;
+            background: #c92a3a;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .mario::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 5px;
+            width: 10px;
+            height: 10px;
+            background: #8B4513;
+            border-radius: 50%;
+            box-shadow: 20px 0 #8B4513;
+        }
+
+        .pipe {
+            position: absolute;
+            bottom: 0;
+            right: -60px;
+            width: 40px;
+            height: 60px;
+            background: #2ecc71;
+            border: 3px solid #27ae60;
+            border-radius: 5px 5px 0 0;
+            z-index: 5;
+        }
+
+        .pipe::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -3px;
+            width: 46px;
+            height: 15px;
+            background: #27ae60;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        .cloud1 {
+            top: 30px;
+            left: 100px;
+            width: 60px;
+            height: 30px;
+        }
+
+        .cloud2 {
+            top: 80px;
+            right: 150px;
+            width: 80px;
+            height: 35px;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 10px;
+            background: #8B4513;
+            z-index: 4;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 24px;
+            text-align: center;
+            z-index: 100;
+            display: none;
+        }
+
+        .game-over button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            font-size: 18px;
+            background: #e63946;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .game-over button:hover {
+            background: #c92a3a;
+        }
+
+        .instructions {
+            text-align: center;
+            margin-top: 10px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        @keyframes jump {
+            0% { bottom: 0; }
+            40% { bottom: 150px; }
+            60% { bottom: 150px; }
+            100% { bottom: 0; }
+        }
+
+        .jumping {
+            animation: jump 0.8s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <span class="score">Pontos: <span id="score">0</span></span>
+            <span>Mario Jump</span>
+        </div>
+        <div class="game-board" id="gameBoard">
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="ground"></div>
+            <div class="mario" id="mario"></div>
+            <div class="pipe" id="pipe"></div>
+            <div class="game-over" id="gameOver">
+                Game Over!<br>
+                <span id="finalScore"></span><br>
+                <button onclick="reiniciarJogo()">Jogar Novamente</button>
+            </div>
+        </div>
+        <div class="instructions">
+            Pressione ESPAÇO ou clique na tela para pular
+        </div>
+    </div>
+
+    <script>
+        const mario = document.getElementById('mario');
+        const pipe = document.getElementById('pipe');
+        const gameBoard = document.getElementById('gameBoard');
+        const scoreElement = document.getElementById('score');
+        const gameOverElement = document.getElementById('gameOver');
+        const finalScoreElement = document.getElementById('finalScore');
+        
+        let pontuacao = 0;
+        let jogoAtivo = true;
+        let loopJogo;
+        let velocidadeJogo = 20;
+
+        // Função para pular
+        function pular() {
+            if (!jogoAtivo) return;
+            
+            if (!mario.classList.contains('jumping')) {
+                mario.classList.add('jumping');
+                
+                // Remove a classe após a animação
+                setTimeout(() => {
+                    mario.classList.remove('jumping');
+                }, 800);
+            }
+        }
+
+        // Event listeners para pular
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space') {
+                event.preventDefault();
+                pular();
+            }
+        });
+
+        gameBoard.addEventListener('click', pular);
+
+        // Função para criar obstáculo
+        function criarObstaculo() {
+            if (!jogoAtivo) return;
+
+            // Posiciona o pipe no início
+            pipe.style.right = '-60px';
+            
+            // Anima o pipe
+            let posicao = -60;
+            const intervalo = setInterval(() => {
+                if (!jogoAtivo) {
+                    clearInterval(intervalo);
+                    return;
+                }
+
+                posicao += 5;
+                pipe.style.right = posicao + 'px';
+
+                // Verifica colisão
+                const marioRect = mario.getBoundingClientRect();
+                const pipeRect = pipe.getBoundingClientRect();
+
+                // Se o Mario está no ar, não há colisão
+                const marioPulando = mario.classList.contains('jumping');
+
+                if (!marioPulando) {
+                    if (pipeRect.left < marioRect.right && 
+                        pipeRect.right > marioRect.left && 
+                        pipeRect.bottom > marioRect.top) {
+                        gameOver();
+                        clearInterval(intervalo);
+                    }
+                }
+
+                // Aumenta pontuação quando o pipe passa
+                if (posicao > 860 && posicao < 870) {
+                    pontuacao += 10;
+                    scoreElement.textContent = pontuacao;
+                }
+
+                // Remove o pipe quando sai da tela
+                if (posicao > 900) {
+                    clearInterval(intervalo);
+                    criarObstaculo(); // Cria um novo pipe
+                }
+            }, velocidadeJogo);
+        }
+
+        // Função de game over
+        function gameOver() {
+            jogoAtivo = false;
+            finalScoreElement.textContent = `Pontuação final: ${pontuacao}`;
+            gameOverElement.style.display = 'block';
+        }
+
+        // Função para reiniciar o jogo
+        function reiniciarJogo() {
+            jogoAtivo = true;
+            pontuacao = 0;
+            scoreElement.textContent = pontuacao;
+            gameOverElement.style.display = 'none';
+            
+            // Remove todos os intervalos existentes
+            if (loopJogo) {
+                clearInterval(loopJogo);
+            }
+            
+            // Reinicia o jogo
+            criarObstaculo();
+        }
+
+        // Inicia o jogo
+        criarObstaculo();
+
+        // Loop do jogo para verificar colisões continuamente
+        loopJogo = setInterval(() => {
+            if (!jogoAtivo) return;
+
+            const marioRect = mario.getBoundingClientRect();
+            const pipeRect = pipe.getBoundingClientRect();
+
+            // Verifica se o Mario está no ar
+            const marioPulando = mario.classList.contains('jumping');
+
+            if (!marioPulando) {
+                if (pipeRect.left < marioRect.right && 
+                    pipeRect.right > marioRect.left && 
+                    pipeRect.bottom > marioRect.top) {
+                    gameOver();
+                }
+            }
+        }, 100);
+
+        // Prevenir scroll da página com a barra de espaço
+        window.addEventListener('keydown', (event) => {
+            if (event.code === 'Space') {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
