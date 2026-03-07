@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Matemática Financeira + Calculadoras</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .subtitle {
+            text-align: center;
+            color: #34495e;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+        .guide {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .guide h2 {
+            color: #2980b9;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .guide h3 {
+            color: #16a085;
+            margin: 20px 0 10px;
+        }
+        .guide p {
+            line-height: 1.6;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .guide .formula {
+            background: #ecf0f1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #c0392b;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .calculators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h2 {
+            color: #2980b9;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        .input-group small {
+            display: block;
+            color: #7f8c8d;
+            margin-top: 5px;
+            font-size: 0.85rem;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #3498db;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .result p {
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+        .result .montante {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .result .juros {
+            font-size: 1.2rem;
+            color: #e67e22;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #7f8c8d;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .calculators { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Matemática Financeira</h1>
+        <p class="subtitle">Guia completo e calculadoras de juros simples e compostos</p>
+
+        <!-- Guia de Matemática Financeira -->
+        <section class="guide">
+            <h2>🔍 Guia Rápido: Juros Simples e Compostos</h2>
+            <p>A matemática financeira está presente em diversas situações do nosso dia a dia, como empréstimos, investimentos, financiamentos e compras parceladas. Entender a diferença entre juros simples e compostos é fundamental para tomar decisões financeiras mais conscientes.</p>
+            
+            <h3>📈 Juros Simples</h3>
+            <p>Nos <strong>juros simples</strong>, a taxa de juros incide apenas sobre o valor principal (capital inicial) durante todo o período. O crescimento é linear.</p>
+            <p><strong>Fórmulas:</strong></p>
+            <p class="formula">J = C × i × t</p>
+            <p class="formula">M = C + J</p>
+            <p>Onde:<br>
+            C = Capital inicial (valor presente)<br>
+            i = Taxa de juros (em decimal; ex: 5% = 0,05)<br>
+            t = Tempo (períodos)<br>
+            J = Juros<br>
+            M = Montante (valor futuro)</p>
+            <p><em>Exemplo:</em> Um empréstimo de R$ 1.000,00 a uma taxa de 2% ao mês durante 6 meses rende juros de R$ 120,00, totalizando R$ 1.120,00.</p>
+
+            <h3>📊 Juros Compostos</h3>
+            <p>Nos <strong>juros compostos</strong> (juros sobre juros), a taxa incide sobre o montante acumulado a cada período. É o regime mais comum no sistema financeiro, pois reflete o crescimento exponencial.</p>
+            <p><strong>Fórmulas:</strong></p>
+            <p class="formula">M = C × (1 + i)^t</p>
+            <p class="formula">J = M - C</p>
+            <p>Onde os símbolos têm o mesmo significado.</p>
+            <p><em>Exemplo:</em> O mesmo capital de R$ 1.000,00 a 2% ao mês por 6 meses renderia aproximadamente R$ 1.126,16, ou seja, R$ 126,16 de juros.</p>
+            <p><strong>⚠️ Importante:</strong> Para cálculos precisos, a taxa de juros e o tempo devem estar na mesma unidade (ex: taxa ao mês e tempo em meses).</p>
+        </section>
+
+        <!-- Calculadoras -->
+        <div class="calculators">
+            <!-- Calculadora de Juros Simples -->
+            <div class="card">
+                <h2>🧮 Juros Simples</h2>
+                <div class="input-group">
+                    <label for="simples-capital">Capital Inicial (R$):</label>
+                    <input type="number" id="simples-capital" placeholder="Ex: 1000" step="any" value="1000">
+                </div>
+                <div class="input-group">
+                    <label for="simples-taxa">Taxa de Juros (% ao período):</label>
+                    <input type="number" id="simples-taxa" placeholder="Ex: 2" step="any" value="2">
+                    <small>Digite apenas o número, sem o símbolo %</small>
+                </div>
+                <div class="input-group">
+                    <label for="simples-tempo">Tempo (períodos):</label>
+                    <input type="number" id="simples-tempo" placeholder="Ex: 6" step="any" value="6">
+                </div>
+                <button onclick="calcularSimples()">Calcular</button>
+                <div class="result" id="resultado-simples">
+                    <p>Montante: <span class="montante" id="simples-montante">R$ 1.120,00</span></p>
+                    <p>Juros: <span class="juros" id="simples-juros">R$ 120,00</span></p>
+                </div>
+            </div>
+
+            <!-- Calculadora de Juros Compostos -->
+            <div class="card">
+                <h2>📈 Juros Compostos</h2>
+                <div class="input-group">
+                    <label for="compostos-capital">Capital Inicial (R$):</label>
+                    <input type="number" id="compostos-capital" placeholder="Ex: 1000" step="any" value="1000">
+                </div>
+                <div class="input-group">
+                    <label for="compostos-taxa">Taxa de Juros (% ao período):</label>
+                    <input type="number" id="compostos-taxa" placeholder="Ex: 2" step="any" value="2">
+                    <small>Digite apenas o número, sem o símbolo %</small>
+                </div>
+                <div class="input-group">
+                    <label for="compostos-tempo">Tempo (períodos):</label>
+                    <input type="number" id="compostos-tempo" placeholder="Ex: 6" step="any" value="6">
+                </div>
+                <button onclick="calcularCompostos()">Calcular</button>
+                <div class="result" id="resultado-compostos">
+                    <p>Montante: <span class="montante" id="compostos-montante">R$ 1.126,16</span></p>
+                    <p>Juros: <span class="juros" id="compostos-juros">R$ 126,16</span></p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Utilize as calculadoras para simular seus investimentos ou empréstimos. Lembre-se: mantenha a taxa e o tempo na mesma unidade.</p>
+            <p>💰 Educação financeira é o caminho para a independência!</p>
+        </footer>
+    </div>
+
+    <script>
+        function formatarMoeda(valor) {
+            return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function calcularSimples() {
+            const capital = parseFloat(document.getElementById('simples-capital').value) || 0;
+            const taxa = (parseFloat(document.getElementById('simples-taxa').value) || 0) / 100; // converte % para decimal
+            const tempo = parseFloat(document.getElementById('simples-tempo').value) || 0;
+
+            const juros = capital * taxa * tempo;
+            const montante = capital + juros;
+
+            document.getElementById('simples-montante').innerText = formatarMoeda(montante);
+            document.getElementById('simples-juros').innerText = formatarMoeda(juros);
+        }
+
+        function calcularCompostos() {
+            const capital = parseFloat(document.getElementById('compostos-capital').value) || 0;
+            const taxa = (parseFloat(document.getElementById('compostos-taxa').value) || 0) / 100; // converte % para decimal
+            const tempo = parseFloat(document.getElementById('compostos-tempo').value) || 0;
+
+            const montante = capital * Math.pow(1 + taxa, tempo);
+            const juros = montante - capital;
+
+            document.getElementById('compostos-montante').innerText = formatarMoeda(montante);
+            document.getElementById('compostos-juros').innerText = formatarMoeda(juros);
+        }
+
+        // Executa cálculos iniciais para exibir os valores padrão
+        window.onload = function() {
+            calcularSimples();
+            calcularCompostos();
+        };
+    </script>
+</body>
+</html>
